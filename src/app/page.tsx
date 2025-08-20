@@ -9,7 +9,6 @@ export default function Home() {
         <video autoPlay loop muted playsInline className='w-full h-full object-cover min-w-full min-h-full'>
           <source src='./media/home-background.mp4' type='video/mp4' />
         </video>
-        <div className='absolute inset-0 bg-black/5' />
       </div>
 
       {/* Header with Logo and Menu */}
