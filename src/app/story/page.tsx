@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Header from "@/components/Header";
 import Image from "next/image";
 
@@ -24,6 +24,7 @@ import Image4 from "@/assets/story/image4.jpg";
 
 export default function Story() {
   const [showScrollControls, setShowScrollControls] = useState(false);
+  const [visibleImages, setVisibleImages] = useState<Set<string>>(new Set());
   const scrollContainerRef = useRef<HorizontalScrollContainerRef>(null);
 
   const handleScrollChange = (info: ScrollInfo) => {
@@ -33,6 +34,37 @@ export default function Story() {
   const scrollToStart = () => {
     scrollContainerRef.current?.resetScroll();
   };
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const imageId = entry.target.getAttribute("data-image-id");
+          if (imageId) {
+            setVisibleImages((prev) => {
+              const newSet = new Set(prev);
+              if (entry.isIntersecting) {
+                newSet.add(imageId);
+              } else {
+                newSet.delete(imageId);
+              }
+              return newSet;
+            });
+          }
+        });
+      },
+      {
+        threshold: 0.1, // Trigger when 10% of the image is visible
+        rootMargin: "50px", // Start animation 50px before the image enters viewport
+      }
+    );
+
+    // Observe all images after component mounts
+    const images = document.querySelectorAll("[data-image-id]");
+    images.forEach((img) => observer.observe(img));
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <div className='relative min-h-screen overflow-hidden'>
@@ -76,12 +108,22 @@ export default function Story() {
           </div>
 
           {/* image 1 */}
-          <div className='relative max-w-[50vw] min-w-[400px] h-[55vh] ml-[10vw]'>
+          <div
+            className={`relative max-w-[50vw] min-w-[400px] h-[55vh] ml-[10vw] transition-opacity duration-1000 ease-in-out ${
+              visibleImages.has("image1") ? "opacity-100" : "opacity-0"
+            }`}
+            data-image-id='image1'
+          >
             <Image src={Image1} alt='' className='w-full h-full object-cover' />
           </div>
 
           <div className='relative w-full h-[60vh] ml-[5vw]  min-w-screen flex flex-col items-center '>
-            <div className='w-[58%]'>
+            <div
+              className={`w-[58%] transition-opacity duration-1000 ease-in-out ${
+                visibleImages.has("image2") ? "opacity-100" : "opacity-0"
+              }`}
+              data-image-id='image2'
+            >
               <Image src={Image2} alt='' className=' h-[60%] object-cover' />
               <div className='flex flex-row justify-baseline gap-10 mt-4'>
                 <div className='flex flex-col'>
@@ -123,7 +165,12 @@ export default function Story() {
           </div>
 
           {/* image 3 */}
-          <div className='relative max-w-[50vw] min-w-[400px] h-[55vh] ml-[10vw]'>
+          <div
+            className={`relative max-w-[50vw] min-w-[400px] h-[55vh] ml-[10vw] transition-opacity duration-1000 ease-in-out ${
+              visibleImages.has("image3") ? "opacity-100" : "opacity-0"
+            }`}
+            data-image-id='image3'
+          >
             <Image src={Image3} alt='' className='w-full h-full object-cover' />
           </div>
 
@@ -157,7 +204,12 @@ export default function Story() {
           </div>
 
           {/* image 4 */}
-          <div className='relative max-w-[50vw] min-w-[400px] h-[55vh] ml-[10vw]'>
+          <div
+            className={`relative max-w-[50vw] min-w-[400px] h-[55vh] ml-[10vw] transition-opacity duration-1000 ease-in-out ${
+              visibleImages.has("image4") ? "opacity-100" : "opacity-0"
+            }`}
+            data-image-id='image4'
+          >
             <Image src={Image4} alt='' className='w-full h-full object-cover' />
           </div>
           <div className='min-w-[5vw]'></div>
