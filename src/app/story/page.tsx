@@ -91,8 +91,8 @@ export default function Story() {
           <ImageZoom
             src={Image1}
             alt=''
-            className='w-full lg:h-full h-auto object-cover'
-            containerClassName='relative lg:max-w-[50vw] lg:min-w-[400px] lg:h-[60vh] lg:ml-[10vw] w-full h-auto px-6 my-10 lg:my-0'
+            className='w-full h-full object-cover'
+            containerClassName='relative lg:max-w-[50vw] lg:min-w-[400px] h-[45vh] md:h-[55vh] lg:h-[60vh] lg:ml-[10vw] w-full px-6 my-10 lg:my-0'
           />
 
           <div className='relative lg:w-auto w-full h-auto lg:ml-0 flex flex-col items-center px-6 my-10 lg:my-0 lg:px-0 lg:min-w-[100vw]'>
@@ -102,9 +102,9 @@ export default function Story() {
                   src={Image2}
                   alt=''
                   className='w-full lg:h-full h-auto object-cover'
-                  containerClassName='relative w-[50vw] lg:h-[55vh]'
+                  containerClassName='relative w-full lg:w-[50vw] lg:h-[55vh]'
                 />
-                <div className='flex lg:flex-row flex-col justify-start gap-4 lg:gap-10 mt-4'>
+                <div className='flex flex-row justify-start gap-4 lg:gap-10 lg:mt-4 mt-8'>
                   <div className='flex flex-col'>
                     <Link href='/ethos'>
                       <h2 className='text-[#e7e7dc] font-[300] text-lg md:text-lg sm:text-lg uppercase'>THE ETHOS</h2>
@@ -206,7 +206,7 @@ export default function Story() {
 
           {/* image 5 */}
           <ImageZoom
-            src={Image1}
+            src={Image2}
             alt=''
             className='w-full lg:h-full h-auto object-cover'
             containerClassName='relative lg:max-w-[50vw] lg:min-w-[400px] lg:h-[60vh] lg:ml-[10vw] w-full h-auto px-6 my-10 lg:my-0'
