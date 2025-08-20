@@ -2,13 +2,15 @@
 import { useState } from "react";
 import Image, { StaticImageData } from "next/image";
 import SideMenu from "./SideMenu";
+import { cn } from "@/lib/utils";
 
 interface HeaderProps {
   logo: StaticImageData;
   isShowMenu?: boolean;
+  buttonClassName?: string;
 }
 
-const Header: React.FC<HeaderProps> = ({ logo, isShowMenu = true }) => {
+const Header: React.FC<HeaderProps> = ({ logo, isShowMenu = true, buttonClassName }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -31,7 +33,10 @@ const Header: React.FC<HeaderProps> = ({ logo, isShowMenu = true }) => {
           {/* Menu Button */}
           {isShowMenu && (
             <button
-              className='text-[#574f4d] text-lg tracking-wider uppercase hover:opacity-80 transition-opacity px-6 py-2 font-sans font-light'
+              className={cn(
+                "text-[#574f4d] text-lg tracking-wider uppercase hover:opacity-80 transition-opacity px-6 py-2 font-sans font-light",
+                buttonClassName
+              )}
               onClick={toggleMenu}
             >
               Menu

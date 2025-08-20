@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useEffect } from "react";
 
 interface SideMenuProps {
@@ -54,13 +55,13 @@ export default function SideMenu({ isOpen, onClose }: SideMenuProps) {
           <ul className='space-y-0'>
             {menuItems.map((item, index) => (
               <li key={item.name} className='relative'>
-                <a
+                <Link
                   href={item.href}
                   className='block py-8 px-8 text-white text-lg font-light font-sans tracking-wider uppercase hover:text-gray-300 transition-colors text-center'
                   onClick={onClose}
                 >
                   {item.name}
-                </a>
+                </Link>
                 {/* Vertical divider line */}
                 {index < menuItems.length - 1 && (
                   <div className='absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-[1.5px] h-8 bg-white/40' />

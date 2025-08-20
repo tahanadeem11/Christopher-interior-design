@@ -1,9 +1,18 @@
 "use client";
+import { useState, useRef } from "react";
 import Header from "@/components/Header";
 import Image from "next/image";
 
 // components
-import { HorizontalScrollContainer } from "@/components/shared/HorizontalScrollContainer";
+import { HorizontalScrollContainer, HorizontalScrollContainerRef } from "@/components/shared/HorizontalScrollContainer";
+
+// types
+interface ScrollInfo {
+  scrollPosition: number;
+  maxScroll: number;
+  scrollPercentage: number;
+  direction: "left" | "right";
+}
 
 // assets
 import BGImage from "@/assets/bg-image.jpg";
@@ -15,6 +24,17 @@ import Image4 from "@/assets/ethos/image4.jpeg";
 import Image5 from "@/assets/ethos/image5.jpg";
 
 export default function Home() {
+  const [showScrollControls, setShowScrollControls] = useState(false);
+  const scrollContainerRef = useRef<HorizontalScrollContainerRef>(null);
+
+  const handleScrollChange = (info: ScrollInfo) => {
+    setShowScrollControls(info.scrollPosition > 50); // Show controls after scrolling 50px
+  };
+
+  const scrollToStart = () => {
+    scrollContainerRef.current?.resetScroll();
+  };
+
   return (
     <div className='relative min-h-screen overflow-hidden'>
       {/* Background Image */}
@@ -27,11 +47,11 @@ export default function Home() {
       </div>
 
       {/* Header with Logo and Menu */}
-      <Header logo={Logo} isShowMenu={false} />
+      <Header logo={Logo} isShowMenu={showScrollControls} buttonClassName='text-[#D6D5C9]' />
 
       {/* Main Content */}
       <main className='relative z-10 container -mt-4'>
-        <HorizontalScrollContainer>
+        <HorizontalScrollContainer ref={scrollContainerRef} onScrollChange={handleScrollChange}>
           {/* text content */}
           <div className='max-w-[900px] min-w-[900px] pl-30 md:min-w-[80vw] md:max-w-[80vw] sm:min-w-[70vw] sm:max-w-[70vw]'>
             <h1 className='text-[#e7e7dc] text-4xl md:text-3xl sm:text-2xl'>THE ETHOS</h1>
@@ -92,6 +112,29 @@ export default function Home() {
           </div>
           <div className='min-w-[30vw]'></div>
         </HorizontalScrollContainer>
+
+        {/* Go Back to Start Button */}
+        {showScrollControls && (
+          <button
+            onClick={scrollToStart}
+            className='fixed bottom-6 right-6 z-20 text-white p-3 rounded-full transition-all duration-300 backdrop-blur-sm'
+            aria-label='Go back to start'
+          >
+            <svg
+              width='40'
+              height='40'
+              viewBox='0 0 24 24'
+              fill='none'
+              stroke='currentColor'
+              strokeWidth='1'
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              className='rotate-180'
+            >
+              <polyline points='9,18 15,12 9,6'></polyline>
+            </svg>
+          </button>
+        )}
       </main>
     </div>
   );
