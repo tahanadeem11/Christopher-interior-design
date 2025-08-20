@@ -59,8 +59,8 @@ export default function Home() {
       <Header logo={Logo} isShowMenu={isBelowLg || showScrollControls} buttonClassName='text-[#D6D5C9]' />
 
       {/* Main Content */}
-      <main className='relative z-10 container -mt-4'>
-        <HorizontalScrollContainer ref={scrollContainerRef} onScrollChange={handleScrollChange}>
+      <main className='relative z-10 container '>
+        <HorizontalScrollContainer className='-mt-8' ref={scrollContainerRef} onScrollChange={handleScrollChange}>
           {/* text content */}
           <div className='lg:max-w-[900px] lg:min-w-[900px] lg:pl-30 w-full max-w-[900px] px-6'>
             <h1 className='text-[#e7e7dc] text-4xl md:text-3xl sm:text-2xl'>THE ETHOS</h1>
@@ -89,15 +89,15 @@ export default function Home() {
           </div>
 
           {/* image 1 */}
-          <div className='relative lg:max-w-[50vw] lg:min-w-[850px] lg:h-[60vh] lg:ml-[10vw] w-full h-auto px-6 my-10 lg:my-0'>
-            <div className='hidden lg:flex absolute bg-black/70 text-xl font-light text-white/80 w-[55%] h-[50%] px-6 py-5 bottom-0 right-0 justify-center items-center text-right leading-relaxed z-10'>
+          <div className='relative lg:max-w-[50vw] lg:min-w-[850px] lg:h-[50vh] lg:ml-[30vw] lg:mt-8 w-full h-auto px-8 my-10 lg:my-0'>
+            <div className='hidden lg:flex absolute bg-black/70 text-lg font-light text-white/80 w-[55%] h-[50%] px-6 py-5 lg:mr-[60px] lg:-mb-[1px] bottom-0 right-0 justify-center items-center text-right leading-relaxed z-10'>
               <span className='block'>
                 The stone sink rests on a reclaimed timber surface, its raw form echoing in imperfection. A steel-framed
                 mirror adds structure, while the lighting — placed at face level — was carefully considered to avoid
                 harsh overhead shadows.
               </span>
             </div>
-            <ImageZoom src={Image1} alt='' className='w-full lg:h-full h-auto object-cover' />
+            <ImageZoom src={Image1} alt='' className='w-full lg:h-[50vh] h-auto object-cover' />
           </div>
 
           {/* image 2 */}
@@ -105,7 +105,7 @@ export default function Home() {
             src={Image2}
             alt=''
             className='w-full lg:h-full h-auto object-cover'
-            containerClassName='relative lg:w-auto w-full lg:h-[60vh] h-auto lg:ml-[5vw] lg:min-w-[850px] px-6 my-10 lg:px-0'
+            containerClassName='relative lg:w-auto w-full lg:h-[50vh] h-auto lg:ml-[5vw] lg:min-w-[850px] px-6 my-10 lg:px-0'
           />
 
           {/* image 3 */}
@@ -113,7 +113,7 @@ export default function Home() {
             src={Image3}
             alt=''
             className='w-full lg:h-full h-auto object-cover'
-            containerClassName='relative lg:w-auto w-full lg:h-[60vh] h-auto lg:ml-[5vw] lg:min-w-[850px] px-6 my-10 lg:px-0'
+            containerClassName='relative lg:w-auto w-full lg:h-[50vh] h-auto lg:ml-[5vw] lg:min-w-[850px] px-6 my-10 lg:px-0'
           />
 
           {/* image 4 */}
@@ -121,7 +121,7 @@ export default function Home() {
             src={Image4}
             alt=''
             className='w-full lg:h-full h-auto object-cover'
-            containerClassName='relative lg:w-auto w-full lg:h-[60vh] h-auto lg:ml-[5vw] lg:min-w-[850px] px-6 my-10 lg:px-0'
+            containerClassName='relative lg:w-auto w-full lg:h-[50vh] h-auto lg:ml-[5vw] lg:min-w-[850px] px-6 my-10 lg:px-0'
           />
 
           {/* image 5 */}
@@ -129,7 +129,7 @@ export default function Home() {
             src={Image5}
             alt=''
             className='w-full lg:h-full h-auto object-cover'
-            containerClassName='relative lg:w-auto w-full lg:h-[60vh] h-auto lg:ml-[5vw] lg:min-w-[850px] px-6 my-10 lg:px-0'
+            containerClassName='relative lg:w-auto w-full lg:h-[50vh] h-auto lg:ml-[5vw] lg:min-w-[850px] px-6 my-10 lg:px-0'
           />
           <div className='hidden lg:block lg:min-w-[30vw]'></div>
         </HorizontalScrollContainer>
