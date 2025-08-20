@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Header from "@/components/Header";
 import ImageZoom from "@/components/shared/ImageZoom";
 
@@ -25,6 +25,7 @@ interface ScrollInfo {
 
 export default function Story() {
   const [showScrollControls, setShowScrollControls] = useState(false);
+  const [isBelowLg, setIsBelowLg] = useState(false);
   const scrollContainerRef = useRef<HorizontalScrollContainerRef>(null);
 
   const handleScrollChange = (info: ScrollInfo) => {
@@ -34,6 +35,13 @@ export default function Story() {
   const scrollToStart = () => {
     scrollContainerRef.current?.resetScroll();
   };
+
+  useEffect(() => {
+    const onResize = () => setIsBelowLg(window.innerWidth < 1024);
+    onResize();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
 
   return (
     <div className='relative min-h-screen overflow-hidden'>
@@ -47,13 +55,13 @@ export default function Story() {
       </div>
 
       {/* Header with Logo and Menu */}
-      <Header logo={Logo} isShowMenu={showScrollControls} buttonClassName='text-[#D6D5C9]' />
+      <Header logo={Logo} isShowMenu={isBelowLg || showScrollControls} buttonClassName='text-[#D6D5C9]' />
 
       {/* Main Content */}
       <main className='relative z-10 container -mt-8'>
         <HorizontalScrollContainer ref={scrollContainerRef} onScrollChange={handleScrollChange}>
           {/* text content */}
-          <div className='max-w-[900px] min-w-[900px] pl-30 md:min-w-[60vw] md:max-w-[60vw] sm:min-w-[40vw] sm:max-w-[40vw]'>
+          <div className='lg:max-w-[900px] lg:min-w-[900px] lg:pl-30 w-full max-w-[900px] px-6'>
             <h1 className='text-[#e7e7dc] text-4xl md:text-3xl sm:text-2xl'>Our Story</h1>
             <h2 className='text-[#e7e7dc] font-[300] text-2xl md:text-xl sm:text-lg'>
               Design should hold you, not overwhelm you. My approach to design isn’t rooted in trends. It’s rooted in
@@ -80,14 +88,19 @@ export default function Story() {
           <ImageZoom
             src={Image1}
             alt=''
-            className='w-full h-full object-cover'
-            containerClassName='relative max-w-[50vw] min-w-[400px] h-[55vh] ml-[10vw]'
+            className='w-full lg:h-full h-auto object-cover'
+            containerClassName='relative lg:max-w-[50vw] lg:min-w-[400px] lg:h-[60vh] lg:ml-[10vw] w-full h-auto px-6 my-10 lg:my-0'
           />
 
-          <div className='relative w-full h-[60vh] ml-[5vw]  min-w-screen flex flex-col items-center '>
-            <div className='w-[58%]'>
-              <ImageZoom src={Image2} alt='' className='h-[60%] object-cover' />
-              <div className='flex flex-row justify-baseline gap-10 mt-4'>
+          <div className='relative lg:w-auto w-full h-auto lg:ml-0 flex flex-col items-center px-6 my-10 lg:my-0 lg:px-0 lg:min-w-[100vw]'>
+            <div className='lg:w-full w-full'>
+              <ImageZoom
+                src={Image2}
+                alt=''
+                className='w-full lg:h-full h-auto object-cover'
+                containerClassName='relative w-full lg:h-[55vh]'
+              />
+              <div className='flex lg:flex-row flex-col justify-start gap-4 lg:gap-10 mt-4'>
                 <div className='flex flex-col'>
                   <h2 className='text-[#e7e7dc] font-[300] text-lg md:text-lg sm:text-lg uppercase'>THE ETHOS</h2>
                   <div className='-mt-2 w-8 h-px bg-white/50'></div>
@@ -101,7 +114,7 @@ export default function Story() {
           </div>
 
           {/* Section 2: Original Story Text Continued */}
-          <div className='max-w-[900px] min-w-[900px] pl-30 md:min-w-[60vw] md:max-w-[60vw] sm:min-w-[40vw] sm:max-w-[40vw]'>
+          <div className='lg:max-w-[900px] lg:min-w-[900px] lg:pl-30 w-full max-w-[900px] px-6'>
             <h1 className='text-[#e7e7dc] text-4xl md:text-3xl sm:text-2xl'>The Story</h1>
             <p className='text-[#e7e7dc] font-[300] text-2xl md:text-xl sm:text-lg'>
               I didn’t come into this work through architecture school or interior design programs. I came to it through
@@ -130,12 +143,12 @@ export default function Story() {
           <ImageZoom
             src={Image3}
             alt=''
-            className='w-full h-full object-cover'
-            containerClassName='relative max-w-[50vw] min-w-[400px] h-[55vh] ml-[10vw]'
+            className='w-full lg:h-full h-auto object-cover'
+            containerClassName='relative lg:max-w-[50vw] lg:min-w-[400px] lg:h-[60vh] lg:ml-[10vw] w-full h-auto px-6 my-10 lg:my-0'
           />
 
           {/* section 3 */}
-          <div className='max-w-[900px] min-w-[900px] pl-30 md:min-w-[60vw] md:max-w-[60vw] sm:min-w-[40vw] sm:max-w-[40vw]'>
+          <div className='lg:max-w-[900px] lg:min-w-[900px] lg:pl-30 w-full max-w-[900px] px-6'>
             <p className='text-[#e7e7dc] font-[300] text-2xl md:text-xl sm:text-lg'>
               I was on-site every day — sketching ideas, adapting floorplans, learning from the trades, figuring out
               what it meant to make a space feel right instead of just look right. And then something happened I didn’t
@@ -167,10 +180,10 @@ export default function Story() {
           <ImageZoom
             src={Image4}
             alt=''
-            className='w-full h-full object-cover'
-            containerClassName='relative max-w-[50vw] min-w-[400px] h-[55vh] ml-[10vw]'
+            className='w-full lg:h-full h-auto object-cover'
+            containerClassName='relative lg:max-w-[50vw] lg:min-w-[400px] lg:h-[60vh] lg:ml-[10vw] w-full h-auto px-6 my-10 lg:my-0'
           />
-          <div className='min-w-[5vw]'></div>
+          <div className='hidden lg:block lg:min-w-[5vw]'></div>
         </HorizontalScrollContainer>
 
         {/* Go Back to Start Button */}

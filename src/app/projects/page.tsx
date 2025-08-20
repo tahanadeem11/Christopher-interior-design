@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -28,6 +28,7 @@ interface ScrollInfo {
 
 export default function Projects() {
   const [showScrollControls, setShowScrollControls] = useState(false);
+  const [isBelowLg, setIsBelowLg] = useState(false);
   const scrollContainerRef = useRef<HorizontalScrollContainerRef>(null);
 
   const handleScrollChange = (info: ScrollInfo) => {
@@ -37,6 +38,13 @@ export default function Projects() {
   const scrollToStart = () => {
     scrollContainerRef.current?.resetScroll();
   };
+
+  useEffect(() => {
+    const onResize = () => setIsBelowLg(window.innerWidth < 1024);
+    onResize();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
 
   return (
     <div className='relative min-h-screen overflow-hidden'>
@@ -50,13 +58,13 @@ export default function Projects() {
       </div>
 
       {/* Header with Logo and Menu */}
-      <Header logo={Logo} isShowMenu={showScrollControls} buttonClassName='text-[#D6D5C9]' />
+      <Header logo={Logo} isShowMenu={isBelowLg || showScrollControls} buttonClassName='text-[#D6D5C9]' />
 
       {/* Main Content */}
       <main className='relative z-10 container -mt-8'>
         <HorizontalScrollContainer ref={scrollContainerRef} onScrollChange={handleScrollChange}>
           {/* Section 1: Our Projects */}
-          <div className='max-w-[900px] min-w-[900px] pl-30 md:min-w-[60vw] md:max-w-[60vw] sm:min-w-[40vw] sm:max-w-[40vw]'>
+          <div className='lg:max-w-[900px] lg:min-w-[900px] lg:pl-30 w-full max-w-[900px] px-6'>
             <h1 className='text-[#e7e7dc] text-4xl md:text-3xl sm:text-2xl'>Our Projects</h1>
             <h2 className='text-[#e7e7dc] font-[300] text-2xl md:text-xl sm:text-lg'>
               Introducing a New Model for Living
@@ -82,23 +90,23 @@ export default function Projects() {
           </div>
 
           {/* Images 1 & 2 for Our Projects section */}
-          <div className='flex flex-col gap-6 ml-[10vw]'>
+          <div className='flex flex-col gap-6 lg:ml-[10vw] w-full px-6 lg:px-0 my-10 lg:my-0'>
             <ImageZoom
               src={Image1}
               alt=''
-              className='w-full h-full object-cover'
-              containerClassName='relative max-w-[50vw] min-w-[400px] h-[25vh]'
+              className='w-full lg:h-full h-auto object-cover'
+              containerClassName='relative lg:max-w-[50vw] lg:min-w-[400px] lg:h-[29vh] w-full h-auto'
             />
             <ImageZoom
               src={Image2}
               alt=''
-              className='w-full h-full object-cover'
-              containerClassName='relative max-w-[50vw] min-w-[400px] h-[25vh]'
+              className='w-full lg:h-full h-auto object-cover'
+              containerClassName='relative lg:max-w-[50vw] lg:min-w-[400px] lg:h-[29vh] w-full h-auto'
             />
           </div>
 
           {/* Section 2: The Quarry Details */}
-          <div className='max-w-[900px] min-w-[900px] pl-30 md:min-w-[60vw] md:max-w-[60vw] sm:min-w-[40vw] sm:max-w-[40vw]'>
+          <div className='lg:max-w-[900px] lg:min-w-[900px] lg:pl-30 w-full max-w-[900px] px-6'>
             <h1 className='text-[#e7e7dc] text-4xl md:text-3xl sm:text-2xl'>The Quarry</h1>
             <h2 className='text-[#e7e7dc] font-[300] text-2xl md:text-xl sm:text-lg'>
               The Quarry – Where Architecture Meets Regeneration
@@ -127,23 +135,23 @@ export default function Projects() {
           </div>
 
           {/* Images 3 & 4 for The Quarry section */}
-          <div className='flex flex-col gap-6 ml-[10vw]'>
+          <div className='flex flex-col gap-6 lg:ml-[10vw] w-full px-6 lg:px-0 my-10 lg:my-0'>
             <ImageZoom
               src={Image3}
               alt=''
-              className='w-full h-full object-cover'
-              containerClassName='relative max-w-[50vw] min-w-[400px] h-[25vh]'
+              className='w-full lg:h-full h-auto object-cover'
+              containerClassName='relative lg:max-w-[50vw] lg:min-w-[400px] lg:h-[29vh] w-full h-auto'
             />
             <ImageZoom
               src={Image4}
               alt=''
-              className='w-full h-full object-cover'
-              containerClassName='relative max-w-[50vw] min-w-[400px] h-[25vh]'
+              className='w-full lg:h-full h-auto object-cover'
+              containerClassName='relative lg:max-w-[50vw] lg:min-w-[400px] lg:h-[29vh] w-full h-auto'
             />
           </div>
 
           {/* section 3: Investment Details */}
-          <div className='max-w-[900px] min-w-[900px] pl-30 md:min-w-[60vw] md:max-w-[60vw] sm:min-w-[40vw] sm:max-w-[40vw]'>
+          <div className='lg:max-w-[900px] lg:min-w-[900px] lg:pl-30 w-full max-w-[900px] px-6'>
             <p className='text-[#e7e7dc] font-[300] text-2xl md:text-xl sm:text-lg'>
               As an investment, The Quarry offers a fixed return of 14–20% annually, with capital protected via a
               ring-fenced SPV and detailed development guarantees. Investors are not just backing a build — they&apos;re
@@ -162,21 +170,21 @@ export default function Projects() {
           </div>
 
           {/* Images 5 & 6 for Investment Details section */}
-          <div className='flex flex-col gap-6 ml-[10vw]'>
+          <div className='flex flex-col gap-6 lg:ml-[10vw] w-full px-6 lg:px-0 my-10 lg:my-0'>
             <ImageZoom
               src={Image5}
               alt=''
-              className='w-full h-full object-cover'
-              containerClassName='relative max-w-[50vw] min-w-[400px] h-[25vh]'
+              className='w-full lg:h-full h-auto object-cover'
+              containerClassName='relative lg:max-w-[50vw] lg:min-w-[400px] lg:h-[29vh] w-full h-auto'
             />
             <ImageZoom
               src={Image6}
               alt=''
-              className='w-full h-full object-cover'
-              containerClassName='relative max-w-[50vw] min-w-[400px] h-[25vh]'
+              className='w-full lg:h-full h-auto object-cover'
+              containerClassName='relative lg:max-w-[50vw] lg:min-w-[400px] lg:h-[29vh] w-full h-auto'
             />
           </div>
-          <div className='min-w-[5vw]'></div>
+          <div className='hidden lg:block lg:min-w-[5vw]'></div>
         </HorizontalScrollContainer>
 
         {/* Go Back to Start Button */}

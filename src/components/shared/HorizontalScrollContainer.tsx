@@ -1,4 +1,4 @@
-import { ReactNode, useRef, useState, useEffect, useImperativeHandle, forwardRef } from "react";
+import { ReactNode, useRef, useState, useEffect, useImperativeHandle, forwardRef, useCallback } from "react";
 
 interface ScrollInfo {
   scrollPosition: number;
@@ -45,9 +45,26 @@ export const HorizontalScrollContainer = forwardRef<HorizontalScrollContainerRef
       onScrollChangeRef.current = onScrollChange;
     }, [onScrollChange]);
 
-    const startAnimation = () => {
+    // responsive: horizontal only on lg and above
+    const [isHorizontal, setIsHorizontal] = useState(false);
+    useEffect(() => {
+      if (typeof window === "undefined") return;
+      const mq = window.matchMedia("(min-width: 1024px)"); // lg
+      const update = () => setIsHorizontal(mq.matches);
+      update();
+      mq.addEventListener("change", update);
+      return () => mq.removeEventListener("change", update);
+    }, []);
+
+    const startAnimation = useCallback(() => {
       const content = contentRef.current;
       if (!content) return;
+
+      // do not animate in vertical mode
+      if (!isHorizontal) {
+        content.style.transform = "none";
+        return;
+      }
 
       if (animFrameRef.current !== null) return; // already animating
 
@@ -61,7 +78,11 @@ export const HorizontalScrollContainer = forwardRef<HorizontalScrollContainerRef
 
         scrollPositionRef.current = newPosition;
         setScrollPosition(newPosition);
-        content.style.transform = `translateX(-${newPosition}px)`;
+        if (isHorizontal) {
+          content.style.transform = `translateX(-${newPosition}px)`;
+        } else {
+          content.style.transform = "none";
+        }
 
         // notify listener with latest values
         const max = maxScrollRef.current;
@@ -83,7 +104,7 @@ export const HorizontalScrollContainer = forwardRef<HorizontalScrollContainerRef
       };
 
       animFrameRef.current = requestAnimationFrame(step);
-    };
+    }, [isHorizontal]);
 
     const smoothScrollToPosition = (targetPosition: number) => {
       targetRef.current = targetPosition;
@@ -110,8 +131,16 @@ export const HorizontalScrollContainer = forwardRef<HorizontalScrollContainerRef
 
       if (!container || !content) return;
 
-      // Calculate max scroll distance
       const updateMaxScroll = () => {
+        if (!isHorizontal) {
+          setMaxScroll(0);
+          maxScrollRef.current = 0;
+          targetRef.current = 0;
+          scrollPositionRef.current = 0;
+          content.style.transform = "none";
+          return;
+        }
+        // Calculate max scroll distance
         const containerWidth = container.clientWidth;
         const contentWidth = content.scrollWidth;
         const newMaxScroll = Math.max(0, contentWidth - containerWidth);
@@ -125,6 +154,7 @@ export const HorizontalScrollContainer = forwardRef<HorizontalScrollContainerRef
 
       // Handle wheel scroll with smoothing
       const handleWheel = (e: WheelEvent & { target: EventTarget | null }) => {
+        if (!isHorizontal) return;
         e.preventDefault();
         const delta = e.deltaY * scrollSpeed;
         const nextTarget = Math.max(0, Math.min(maxScrollRef.current, targetRef.current + delta));
@@ -136,21 +166,25 @@ export const HorizontalScrollContainer = forwardRef<HorizontalScrollContainerRef
       updateMaxScroll();
 
       // Add event listeners
-      container.addEventListener("wheel", handleWheel, { passive: false });
+      if (isHorizontal) {
+        container.addEventListener("wheel", handleWheel, { passive: false });
+      }
       window.addEventListener("resize", updateMaxScroll);
 
       // Cleanup
       return () => {
-        container.removeEventListener("wheel", handleWheel);
+        if (isHorizontal) {
+          container.removeEventListener("wheel", handleWheel);
+        }
         window.removeEventListener("resize", updateMaxScroll);
         if (animFrameRef.current !== null) cancelAnimationFrame(animFrameRef.current);
         animFrameRef.current = null;
       };
-    }, [scrollSpeed]);
+    }, [scrollSpeed, isHorizontal, startAnimation]);
 
     return (
-      <div ref={containerRef} className={`overflow-hidden min-w-screen ${className}`}>
-        <div ref={contentRef} className='flex' style={{ willChange: "transform" }}>
+      <div ref={containerRef} className={`lg:overflow-hidden overflow-visible min-w-screen ${className}`}>
+        <div ref={contentRef} className='flex lg:flex-row flex-col' style={{ willChange: "transform" }}>
           {children}
         </div>
       </div>
