@@ -1,18 +1,11 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
-import Header from "@/components/Header";
 import Image from "next/image";
+import { useState, useRef } from "react";
+import Header from "@/components/Header";
+import ImageZoom from "@/components/shared/ImageZoom";
 
 // components
 import { HorizontalScrollContainer, HorizontalScrollContainerRef } from "@/components/shared/HorizontalScrollContainer";
-
-// types
-interface ScrollInfo {
-  scrollPosition: number;
-  maxScroll: number;
-  scrollPercentage: number;
-  direction: "left" | "right";
-}
 
 // assets
 import BGImage from "@/assets/bg-image.jpg";
@@ -22,9 +15,16 @@ import Image2 from "@/assets/story/image2.jpg";
 import Image3 from "@/assets/story/image3.jpg";
 import Image4 from "@/assets/story/image4.jpg";
 
+// types
+interface ScrollInfo {
+  scrollPosition: number;
+  maxScroll: number;
+  scrollPercentage: number;
+  direction: "left" | "right";
+}
+
 export default function Story() {
   const [showScrollControls, setShowScrollControls] = useState(false);
-  const [visibleImages, setVisibleImages] = useState<Set<string>>(new Set());
   const scrollContainerRef = useRef<HorizontalScrollContainerRef>(null);
 
   const handleScrollChange = (info: ScrollInfo) => {
@@ -34,37 +34,6 @@ export default function Story() {
   const scrollToStart = () => {
     scrollContainerRef.current?.resetScroll();
   };
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const imageId = entry.target.getAttribute("data-image-id");
-          if (imageId) {
-            setVisibleImages((prev) => {
-              const newSet = new Set(prev);
-              if (entry.isIntersecting) {
-                newSet.add(imageId);
-              } else {
-                newSet.delete(imageId);
-              }
-              return newSet;
-            });
-          }
-        });
-      },
-      {
-        threshold: 0.1, // Trigger when 10% of the image is visible
-        rootMargin: "50px", // Start animation 50px before the image enters viewport
-      }
-    );
-
-    // Observe all images after component mounts
-    const images = document.querySelectorAll("[data-image-id]");
-    images.forEach((img) => observer.observe(img));
-
-    return () => observer.disconnect();
-  }, []);
 
   return (
     <div className='relative min-h-screen overflow-hidden'>
@@ -108,23 +77,16 @@ export default function Story() {
           </div>
 
           {/* image 1 */}
-          <div
-            className={`relative max-w-[50vw] min-w-[400px] h-[55vh] ml-[10vw] transition-opacity duration-1000 ease-in-out ${
-              visibleImages.has("image1") ? "opacity-100" : "opacity-0"
-            }`}
-            data-image-id='image1'
-          >
-            <Image src={Image1} alt='' className='w-full h-full object-cover' />
-          </div>
+          <ImageZoom
+            src={Image1}
+            alt=''
+            className='w-full h-full object-cover'
+            containerClassName='relative max-w-[50vw] min-w-[400px] h-[55vh] ml-[10vw]'
+          />
 
           <div className='relative w-full h-[60vh] ml-[5vw]  min-w-screen flex flex-col items-center '>
-            <div
-              className={`w-[58%] transition-opacity duration-1000 ease-in-out ${
-                visibleImages.has("image2") ? "opacity-100" : "opacity-0"
-              }`}
-              data-image-id='image2'
-            >
-              <Image src={Image2} alt='' className=' h-[60%] object-cover' />
+            <div className='w-[58%]'>
+              <ImageZoom src={Image2} alt='' className='h-[60%] object-cover' />
               <div className='flex flex-row justify-baseline gap-10 mt-4'>
                 <div className='flex flex-col'>
                   <h2 className='text-[#e7e7dc] font-[300] text-lg md:text-lg sm:text-lg uppercase'>THE ETHOS</h2>
@@ -165,14 +127,12 @@ export default function Story() {
           </div>
 
           {/* image 3 */}
-          <div
-            className={`relative max-w-[50vw] min-w-[400px] h-[55vh] ml-[10vw] transition-opacity duration-1000 ease-in-out ${
-              visibleImages.has("image3") ? "opacity-100" : "opacity-0"
-            }`}
-            data-image-id='image3'
-          >
-            <Image src={Image3} alt='' className='w-full h-full object-cover' />
-          </div>
+          <ImageZoom
+            src={Image3}
+            alt=''
+            className='w-full h-full object-cover'
+            containerClassName='relative max-w-[50vw] min-w-[400px] h-[55vh] ml-[10vw]'
+          />
 
           {/* section 3 */}
           <div className='max-w-[900px] min-w-[900px] pl-30 md:min-w-[60vw] md:max-w-[60vw] sm:min-w-[40vw] sm:max-w-[40vw]'>
@@ -204,14 +164,12 @@ export default function Story() {
           </div>
 
           {/* image 4 */}
-          <div
-            className={`relative max-w-[50vw] min-w-[400px] h-[55vh] ml-[10vw] transition-opacity duration-1000 ease-in-out ${
-              visibleImages.has("image4") ? "opacity-100" : "opacity-0"
-            }`}
-            data-image-id='image4'
-          >
-            <Image src={Image4} alt='' className='w-full h-full object-cover' />
-          </div>
+          <ImageZoom
+            src={Image4}
+            alt=''
+            className='w-full h-full object-cover'
+            containerClassName='relative max-w-[50vw] min-w-[400px] h-[55vh] ml-[10vw]'
+          />
           <div className='min-w-[5vw]'></div>
         </HorizontalScrollContainer>
 

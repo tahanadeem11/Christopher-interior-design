@@ -1,17 +1,22 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
-import Header from "@/components/Header";
+import { useState, useRef } from "react";
+import Link from "next/link";
 import Image from "next/image";
 
 // components
 import { HorizontalScrollContainer, HorizontalScrollContainerRef } from "@/components/shared/HorizontalScrollContainer";
+import Header from "@/components/Header";
+import ImageZoom from "@/components/shared/ImageZoom";
 
+// assets
+import Logo from "@/assets/ethos/logo.png";
 import Image1 from "@/assets/projects/image1.jpeg";
 import Image2 from "@/assets/projects/image2.jpeg";
 import Image3 from "@/assets/projects/image3.jpeg";
 import Image4 from "@/assets/projects/image4.jpeg";
 import Image5 from "@/assets/projects/image5.jpeg";
 import Image6 from "@/assets/projects/image6.jpeg";
+import BGImage from "@/assets/projects/background.jpg";
 
 // types
 interface ScrollInfo {
@@ -21,14 +26,8 @@ interface ScrollInfo {
   direction: "left" | "right";
 }
 
-// assets
-import BGImage from "@/assets/projects/background.jpg";
-import Logo from "@/assets/ethos/logo.png";
-import Link from "next/link";
-
 export default function Projects() {
   const [showScrollControls, setShowScrollControls] = useState(false);
-  const [visibleImages, setVisibleImages] = useState<Set<string>>(new Set());
   const scrollContainerRef = useRef<HorizontalScrollContainerRef>(null);
 
   const handleScrollChange = (info: ScrollInfo) => {
@@ -38,37 +37,6 @@ export default function Projects() {
   const scrollToStart = () => {
     scrollContainerRef.current?.resetScroll();
   };
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const imageId = entry.target.getAttribute("data-image-id");
-          if (imageId) {
-            setVisibleImages((prev) => {
-              const newSet = new Set(prev);
-              if (entry.isIntersecting) {
-                newSet.add(imageId);
-              } else {
-                newSet.delete(imageId);
-              }
-              return newSet;
-            });
-          }
-        });
-      },
-      {
-        threshold: 0.1, // Trigger when 10% of the image is visible
-        rootMargin: "50px", // Start animation 50px before the image enters viewport
-      }
-    );
-
-    // Observe all images after component mounts
-    const images = document.querySelectorAll("[data-image-id]");
-    images.forEach((img) => observer.observe(img));
-
-    return () => observer.disconnect();
-  }, []);
 
   return (
     <div className='relative min-h-screen overflow-hidden'>
@@ -115,22 +83,18 @@ export default function Projects() {
 
           {/* Images 1 & 2 for Our Projects section */}
           <div className='flex flex-col gap-6 ml-[10vw]'>
-            <div
-              className={`relative max-w-[50vw] min-w-[400px] h-[25vh] transition-opacity duration-1000 ease-in-out ${
-                visibleImages.has("image1") ? "opacity-100" : "opacity-0"
-              }`}
-              data-image-id='image1'
-            >
-              <Image src={Image1} alt='' className='w-full h-full object-cover' />
-            </div>
-            <div
-              className={`relative max-w-[50vw] min-w-[400px] h-[25vh] transition-opacity duration-1000 ease-in-out ${
-                visibleImages.has("image2") ? "opacity-100" : "opacity-0"
-              }`}
-              data-image-id='image2'
-            >
-              <Image src={Image2} alt='' className='w-full h-full object-cover' />
-            </div>
+            <ImageZoom
+              src={Image1}
+              alt=''
+              className='w-full h-full object-cover'
+              containerClassName='relative max-w-[50vw] min-w-[400px] h-[25vh]'
+            />
+            <ImageZoom
+              src={Image2}
+              alt=''
+              className='w-full h-full object-cover'
+              containerClassName='relative max-w-[50vw] min-w-[400px] h-[25vh]'
+            />
           </div>
 
           {/* Section 2: The Quarry Details */}
@@ -164,22 +128,18 @@ export default function Projects() {
 
           {/* Images 3 & 4 for The Quarry section */}
           <div className='flex flex-col gap-6 ml-[10vw]'>
-            <div
-              className={`relative max-w-[50vw] min-w-[400px] h-[25vh] transition-opacity duration-1000 ease-in-out ${
-                visibleImages.has("image3") ? "opacity-100" : "opacity-0"
-              }`}
-              data-image-id='image3'
-            >
-              <Image src={Image3} alt='' className='w-full h-full object-cover' />
-            </div>
-            <div
-              className={`relative max-w-[50vw] min-w-[400px] h-[25vh] transition-opacity duration-1000 ease-in-out ${
-                visibleImages.has("image4") ? "opacity-100" : "opacity-0"
-              }`}
-              data-image-id='image4'
-            >
-              <Image src={Image4} alt='' className='w-full h-full object-cover' />
-            </div>
+            <ImageZoom
+              src={Image3}
+              alt=''
+              className='w-full h-full object-cover'
+              containerClassName='relative max-w-[50vw] min-w-[400px] h-[25vh]'
+            />
+            <ImageZoom
+              src={Image4}
+              alt=''
+              className='w-full h-full object-cover'
+              containerClassName='relative max-w-[50vw] min-w-[400px] h-[25vh]'
+            />
           </div>
 
           {/* section 3: Investment Details */}
@@ -203,22 +163,18 @@ export default function Projects() {
 
           {/* Images 5 & 6 for Investment Details section */}
           <div className='flex flex-col gap-6 ml-[10vw]'>
-            <div
-              className={`relative max-w-[50vw] min-w-[400px] h-[25vh] transition-opacity duration-1000 ease-in-out ${
-                visibleImages.has("image5") ? "opacity-100" : "opacity-0"
-              }`}
-              data-image-id='image5'
-            >
-              <Image src={Image5} alt='' className='w-full h-full object-cover' />
-            </div>
-            <div
-              className={`relative max-w-[50vw] min-w-[400px] h-[25vh] transition-opacity duration-1000 ease-in-out ${
-                visibleImages.has("image6") ? "opacity-100" : "opacity-0"
-              }`}
-              data-image-id='image6'
-            >
-              <Image src={Image6} alt='' className='w-full h-full object-cover' />
-            </div>
+            <ImageZoom
+              src={Image5}
+              alt=''
+              className='w-full h-full object-cover'
+              containerClassName='relative max-w-[50vw] min-w-[400px] h-[25vh]'
+            />
+            <ImageZoom
+              src={Image6}
+              alt=''
+              className='w-full h-full object-cover'
+              containerClassName='relative max-w-[50vw] min-w-[400px] h-[25vh]'
+            />
           </div>
           <div className='min-w-[5vw]'></div>
         </HorizontalScrollContainer>

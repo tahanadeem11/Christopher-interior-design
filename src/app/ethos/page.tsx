@@ -1,7 +1,7 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import Header from "@/components/Header";
-import Image from "next/image";
+import ImageZoom from "@/components/shared/ImageZoom";
 
 // components
 import { HorizontalScrollContainer, HorizontalScrollContainerRef } from "@/components/shared/HorizontalScrollContainer";
@@ -22,10 +22,10 @@ import Image2 from "@/assets/ethos/image2.jpeg";
 import Image3 from "@/assets/ethos/image3.jpeg";
 import Image4 from "@/assets/ethos/image4.jpeg";
 import Image5 from "@/assets/ethos/image5.jpg";
+import Image from "next/image";
 
 export default function Home() {
   const [showScrollControls, setShowScrollControls] = useState(false);
-  const [visibleImages, setVisibleImages] = useState<Set<string>>(new Set());
   const scrollContainerRef = useRef<HorizontalScrollContainerRef>(null);
 
   const handleScrollChange = (info: ScrollInfo) => {
@@ -35,37 +35,6 @@ export default function Home() {
   const scrollToStart = () => {
     scrollContainerRef.current?.resetScroll();
   };
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const imageId = entry.target.getAttribute("data-image-id");
-          if (imageId) {
-            setVisibleImages((prev) => {
-              const newSet = new Set(prev);
-              if (entry.isIntersecting) {
-                newSet.add(imageId);
-              } else {
-                newSet.delete(imageId);
-              }
-              return newSet;
-            });
-          }
-        });
-      },
-      {
-        threshold: 0.1, // Trigger when 10% of the image is visible
-        rootMargin: "50px", // Start animation 50px before the image enters viewport
-      }
-    );
-
-    // Observe all images after component mounts
-    const images = document.querySelectorAll("[data-image-id]");
-    images.forEach((img) => observer.observe(img));
-
-    return () => observer.disconnect();
-  }, []);
 
   return (
     <div className='relative min-h-screen overflow-hidden'>
@@ -112,61 +81,48 @@ export default function Home() {
           </div>
 
           {/* image 1 */}
-          <div
-            className={`relative max-w-[50vw] min-w-[850px] h-[60vh] ml-[10vw] transition-opacity duration-1000 ease-in-out ${
-              visibleImages.has("image1") ? "opacity-100" : "opacity-0"
-            }`}
-            data-image-id='image1'
-          >
-            <div className='absolute bg-black/70 text-xl font-light text-white/80 w-[55%] h-[50%] px-6 py-5 bottom-0 right-0 flex justify-center items-center text-right leading-relaxed'>
+          <div className='relative max-w-[50vw] min-w-[850px] h-[60vh] ml-[10vw]'>
+            <div className='absolute bg-black/70 text-xl font-light text-white/80 w-[55%] h-[50%] px-6 py-5 bottom-0 right-0 flex justify-center items-center text-right leading-relaxed z-10'>
               <span className='block'>
                 The stone sink rests on a reclaimed timber surface, its raw form echoing in imperfection. A steel-framed
                 mirror adds structure, while the lighting — placed at face level — was carefully considered to avoid
                 harsh overhead shadows.
               </span>
             </div>
-            <Image src={Image1} alt='' className='w-full h-full object-cover' />
+            <ImageZoom src={Image1} alt='' className='w-full h-full object-cover' />
           </div>
 
           {/* image 2 */}
-          <div
-            className={`relative w-full h-[60vh] ml-[5vw] min-w-[850px] transition-opacity duration-1000 ease-in-out ${
-              visibleImages.has("image2") ? "opacity-100" : "opacity-0"
-            }`}
-            data-image-id='image2'
-          >
-            <Image src={Image2} alt='' className='w-full h-full object-cover' />
-          </div>
+          <ImageZoom
+            src={Image2}
+            alt=''
+            className='w-full h-full object-cover'
+            containerClassName='relative w-full h-[60vh] ml-[5vw] min-w-[850px]'
+          />
 
           {/* image 3 */}
-          <div
-            className={`relative w-full h-[60vh] ml-[5vw] min-w-[850px] transition-opacity duration-1000 ease-in-out ${
-              visibleImages.has("image3") ? "opacity-100" : "opacity-0"
-            }`}
-            data-image-id='image3'
-          >
-            <Image src={Image3} alt='' className='w-full h-full object-cover' />
-          </div>
+          <ImageZoom
+            src={Image3}
+            alt=''
+            className='w-full h-full object-cover'
+            containerClassName='relative w-full h-[60vh] ml-[5vw] min-w-[850px]'
+          />
 
           {/* image 4 */}
-          <div
-            className={`relative w-full h-[60vh] ml-[5vw] min-w-[850px] transition-opacity duration-1000 ease-in-out ${
-              visibleImages.has("image4") ? "opacity-100" : "opacity-0"
-            }`}
-            data-image-id='image4'
-          >
-            <Image src={Image4} alt='' className='w-full h-full object-cover' />
-          </div>
+          <ImageZoom
+            src={Image4}
+            alt=''
+            className='w-full h-full object-cover'
+            containerClassName='relative w-full h-[60vh] ml-[5vw] min-w-[850px]'
+          />
 
           {/* image 5 */}
-          <div
-            className={`relative w-full h-[60vh] ml-[5vw] min-w-[850px] transition-opacity duration-1000 ease-in-out ${
-              visibleImages.has("image5") ? "opacity-100" : "opacity-0"
-            }`}
-            data-image-id='image5'
-          >
-            <Image src={Image5} alt='' className='w-full h-full object-cover' />
-          </div>
+          <ImageZoom
+            src={Image5}
+            alt=''
+            className='w-full h-full object-cover'
+            containerClassName='relative w-full h-[60vh] ml-[5vw] min-w-[850px]'
+          />
           <div className='min-w-[30vw]'></div>
         </HorizontalScrollContainer>
 

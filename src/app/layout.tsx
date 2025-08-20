@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Josefin_Sans, Cormorant } from "next/font/google";
 import "./globals.css";
 import CustomCursor from "@/components/CustomCursor";
+import SmoothScroll from "@/components/shared/SmoothScroll";
 
 const josefinSans = Josefin_Sans({
   subsets: ["latin"],
@@ -26,10 +27,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang='en' className='scroll-smooth'>
+    <html lang='en'>
       <body className={`${josefinSans.variable} ${cormorant.variable} font-sans bg-off-white text-dark min-h-screen`}>
         <CustomCursor />
-        {children}
+        <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>
   );

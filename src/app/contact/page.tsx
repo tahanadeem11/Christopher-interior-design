@@ -5,7 +5,7 @@ import { useState } from "react";
 
 import InstaIcon from "@/assets/contacts/CP insta icon.png";
 import PinterestIcon from "@/assets/contacts/CP pinterest icon.png";
-import Image from "next/image";
+import ImageZoom from "@/components/shared/ImageZoom";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -64,7 +64,7 @@ export default function Contact() {
                   className='w-8 h-8 text-[#574f4d] hover:opacity-80 transition-opacity rounded-full overflow-clip'
                   aria-label='Instagram'
                 >
-                  <Image src={InstaIcon} alt='Instagram' className='w-full h-full' />
+                  <ImageZoom src={InstaIcon} alt='Instagram' className='w-full h-full' />
                 </a>
 
                 {/* Pinterest Icon */}
@@ -73,7 +73,7 @@ export default function Contact() {
                   className='w-8 h-8 text-[#574f4d] hover:opacity-80 transition-opacity rounded-full overflow-clip'
                   aria-label='Pinterest'
                 >
-                  <Image src={PinterestIcon} alt='Pinterest' />
+                  <ImageZoom src={PinterestIcon} alt='Pinterest' className='w-full h-full' />
                 </a>
               </div>
             </div>

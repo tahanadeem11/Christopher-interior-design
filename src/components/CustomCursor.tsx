@@ -1,31 +1,36 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 
 export default function CustomCursor() {
-  const cursorRef = useRef<HTMLDivElement>(null);
+  const cursorX = useMotionValue(-100);
+  const cursorY = useMotionValue(-100);
+
+  const springConfig = { damping: 25, stiffness: 700, mass: 0.5 };
+  const cursorXSpring = useSpring(cursorX, springConfig);
+  const cursorYSpring = useSpring(cursorY, springConfig);
 
   useEffect(() => {
-    const cursor = cursorRef.current;
-    if (!cursor) return;
-
-    const updateCursor = (e: MouseEvent) => {
-      cursor.style.transform = `translate3d(${e.clientX - 10}px, ${e.clientY - 10}px, 0)`;
+    const moveCursor = (e: MouseEvent) => {
+      cursorX.set(e.clientX - 10);
+      cursorY.set(e.clientY - 10);
     };
 
-    const showCursor = () => (cursor.style.opacity = "1");
-    const hideCursor = () => (cursor.style.opacity = "0");
-
-    document.addEventListener("mousemove", updateCursor, { passive: true });
-    document.addEventListener("mouseenter", showCursor);
-    document.addEventListener("mouseleave", hideCursor);
+    window.addEventListener("mousemove", moveCursor);
 
     return () => {
-      document.removeEventListener("mousemove", updateCursor);
-      document.removeEventListener("mouseenter", showCursor);
-      document.removeEventListener("mouseleave", hideCursor);
+      window.removeEventListener("mousemove", moveCursor);
     };
-  }, []);
+  }, [cursorX, cursorY]);
 
-  return <div ref={cursorRef} className='custom-cursor' />;
+  return (
+    <motion.div
+      className='custom-cursor'
+      style={{
+        translateX: cursorXSpring,
+        translateY: cursorYSpring,
+      }}
+    />
+  );
 }
