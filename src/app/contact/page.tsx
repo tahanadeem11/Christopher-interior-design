@@ -29,7 +29,7 @@ export default function Contact() {
   };
 
   return (
-    <div className='relative min-h-screen overflow-clip'>
+    <div className='h-[100vh] min-h-screen overflow-clip'>
       {/* Background Video */}
       <div className='absolute inset-0 z-0'>
         <video autoPlay loop muted playsInline className='w-full h-full object-cover min-w-full min-h-full'>
