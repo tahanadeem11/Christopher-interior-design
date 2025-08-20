@@ -26,41 +26,68 @@ export const HorizontalScrollContainer = forwardRef<HorizontalScrollContainerRef
     const [scrollPosition, setScrollPosition] = useState(0);
     const [maxScroll, setMaxScroll] = useState(0);
 
-    const smoothScrollToPosition = (targetPosition: number) => {
+    // refs to maintain latest values without re-binding listeners
+    const targetRef = useRef(0);
+    const animFrameRef = useRef<number | null>(null);
+    const scrollPositionRef = useRef(0);
+    const maxScrollRef = useRef(0);
+    const onScrollChangeRef = useRef(onScrollChange);
+
+    useEffect(() => {
+      scrollPositionRef.current = scrollPosition;
+    }, [scrollPosition]);
+
+    useEffect(() => {
+      maxScrollRef.current = maxScroll;
+    }, [maxScroll]);
+
+    useEffect(() => {
+      onScrollChangeRef.current = onScrollChange;
+    }, [onScrollChange]);
+
+    const startAnimation = () => {
       const content = contentRef.current;
       if (!content) return;
 
-      const currentPosition = scrollPosition;
-      const distance = targetPosition - currentPosition;
-      const duration = 500; // duration of the smooth scroll in milliseconds
-      const startTime = performance.now();
+      if (animFrameRef.current !== null) return; // already animating
 
-      const animateScroll = (currentTime: number) => {
-        const timeElapsed = currentTime - startTime;
-        const progress = Math.min(timeElapsed / duration, 1); // ease out
+      const step = () => {
+        const current = scrollPositionRef.current;
+        const target = targetRef.current;
+        const diff = target - current;
 
-        // Calculate the easing effect: smooth transition
-        const easeProgress = 1 - Math.pow(1 - progress, 3); // cubic easing
+        // smoothing factor: lower = smoother/longer
+        const newPosition = Math.abs(diff) < 0.5 ? target : current + diff * 0.12;
 
-        const newPosition = currentPosition + distance * easeProgress;
+        scrollPositionRef.current = newPosition;
         setScrollPosition(newPosition);
         content.style.transform = `translateX(-${newPosition}px)`;
 
-        if (progress < 1) {
-          requestAnimationFrame(animateScroll);
+        // notify listener with latest values
+        const max = maxScrollRef.current;
+        const cb = onScrollChangeRef.current;
+        if (cb) {
+          cb({
+            scrollPosition: newPosition,
+            maxScroll: max,
+            scrollPercentage: max > 0 ? (newPosition / max) * 100 : 0,
+            direction: diff >= 0 ? "right" : "left",
+          });
+        }
+
+        if (Math.abs(diff) >= 0.5) {
+          animFrameRef.current = requestAnimationFrame(step);
         } else {
-          if (onScrollChange) {
-            onScrollChange({
-              scrollPosition: newPosition,
-              maxScroll,
-              scrollPercentage: maxScroll > 0 ? (newPosition / maxScroll) * 100 : 0,
-              direction: newPosition > scrollPosition ? "right" : "left",
-            });
-          }
+          animFrameRef.current = null;
         }
       };
 
-      requestAnimationFrame(animateScroll);
+      animFrameRef.current = requestAnimationFrame(step);
+    };
+
+    const smoothScrollToPosition = (targetPosition: number) => {
+      targetRef.current = targetPosition;
+      startAnimation();
     };
 
     const scrollToPosition = (position: number) => {
@@ -89,29 +116,20 @@ export const HorizontalScrollContainer = forwardRef<HorizontalScrollContainerRef
         const contentWidth = content.scrollWidth;
         const newMaxScroll = Math.max(0, contentWidth - containerWidth);
         setMaxScroll(newMaxScroll);
+        maxScrollRef.current = newMaxScroll;
+        // clamp targets within bounds after resize
+        targetRef.current = Math.max(0, Math.min(newMaxScroll, targetRef.current));
+        scrollPositionRef.current = Math.max(0, Math.min(newMaxScroll, scrollPositionRef.current));
+        content.style.transform = `translateX(-${scrollPositionRef.current}px)`;
       };
 
-      // Handle wheel scroll
+      // Handle wheel scroll with smoothing
       const handleWheel = (e: WheelEvent & { target: EventTarget | null }) => {
         e.preventDefault();
-
         const delta = e.deltaY * scrollSpeed;
-        const newScrollPosition = Math.max(0, Math.min(maxScroll, scrollPosition + delta));
-
-        setScrollPosition(newScrollPosition);
-        if (content) {
-          content.style.transform = `translateX(-${newScrollPosition}px)`;
-        }
-
-        // Call the callback function with scroll info
-        if (onScrollChange) {
-          onScrollChange({
-            scrollPosition: newScrollPosition,
-            maxScroll,
-            scrollPercentage: maxScroll > 0 ? (newScrollPosition / maxScroll) * 100 : 0,
-            direction: delta > 0 ? "right" : "left",
-          });
-        }
+        const nextTarget = Math.max(0, Math.min(maxScrollRef.current, targetRef.current + delta));
+        targetRef.current = nextTarget;
+        startAnimation();
       };
 
       // Initial setup
@@ -125,16 +143,14 @@ export const HorizontalScrollContainer = forwardRef<HorizontalScrollContainerRef
       return () => {
         container.removeEventListener("wheel", handleWheel);
         window.removeEventListener("resize", updateMaxScroll);
+        if (animFrameRef.current !== null) cancelAnimationFrame(animFrameRef.current);
+        animFrameRef.current = null;
       };
-    }, [scrollPosition, maxScroll, scrollSpeed, onScrollChange]);
+    }, [scrollSpeed]);
 
     return (
       <div ref={containerRef} className={`overflow-hidden min-w-screen ${className}`}>
-        <div
-          ref={contentRef}
-          className='flex transition-transform duration-75 ease-out'
-          style={{ willChange: "transform" }}
-        >
+        <div ref={contentRef} className='flex' style={{ willChange: "transform" }}>
           {children}
         </div>
       </div>
