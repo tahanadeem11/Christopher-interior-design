@@ -1,5 +1,6 @@
 "use client";
 import Header from "@/components/Header";
+import Logo from "@/assets/home/logo.png";
 
 export default function Home() {
   return (
@@ -12,7 +13,7 @@ export default function Home() {
       </div>
 
       {/* Header with Logo and Menu */}
-      <Header />
+      <Header logo={Logo} />
 
       {/* Main Content */}
       <main className='relative z-10 container mx-auto px-4 py-16 mt-10'>

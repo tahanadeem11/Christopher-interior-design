@@ -8,9 +8,9 @@ interface SideMenuProps {
 
 const menuItems = [
   { name: "Home", href: "/" },
-  { name: "Our Story", href: "/about" },
-  { name: "The Ethos", href: "/portfolio" },
-  { name: "Future Projects", href: "/services" },
+  { name: "Our Story", href: "/story" },
+  { name: "The Ethos", href: "/ethos" },
+  { name: "Future Projects", href: "/projects" },
   { name: "Contact", href: "/contact" },
 ];
 
