@@ -1,74 +1,45 @@
+"use client";
+import Image from "next/image";
+
+// assets
+import Logo from "@/assets/logo.png";
+
 export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col">
-      <header className="bg-primary text-white py-12 md:py-16">
-        <div className="container">
-          <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight">Christopher Poole</h1>
-          <p className="mt-4 text-lg md:text-xl text-light/90 font-sans">Welcome to my personal website</p>
+    <div className='relative min-h-screen overflow-hidden'>
+      {/* Background Video */}
+      <div className='absolute inset-0 z-0'>
+        <video autoPlay loop muted playsInline className='w-full h-full object-cover min-w-full min-h-full'>
+          <source src='./media/home-background.mp4' type='video/mp4' />
+        </video>
+        <div className='absolute inset-0 bg-black/5' />
+      </div>
+
+      {/* Header with Logo and Menu */}
+      <header className='relative z-10 py-4 px-6 w-full -mt-16'>
+        <div className='max-w-7xl mx-auto flex justify-between items-center'>
+          {/* Logo */}
+          <div className='relative w-80 h-80'>
+            <Image src={Logo} alt='Christopher Poole Logo' className='w-full h-full object-contain' priority />
+          </div>
+
+          {/* Menu Button */}
+          <button
+            className='text-[#574f4d] text-lg tracking-wider uppercase hover:opacity-80 transition-opacity px-6 py-2 font-sans font-light'
+            onClick={() => console.log("Menu clicked")}
+          >
+            Menu
+          </button>
         </div>
       </header>
-      
-      <main className="flex-grow container py-12 md:py-16">
-        <section className="mb-16 md:mb-24">
-          <h2 className="font-serif text-3xl md:text-4xl text-primary mb-8">About Me</h2>
-          <div className="bg-white p-8 md:p-10 rounded-lg shadow-sm border border-light/50">
-            <div className="prose prose-lg max-w-none text-secondary">
-              <p className="mb-6 font-serif">
-                Hello! I&apos;m Christopher Poole, a passionate professional dedicated to excellence in my field. 
-                With years of experience and a commitment to continuous learning, I strive to create meaningful 
-                work that makes a difference.
-              </p>
-              <p>
-                This website serves as a platform to share my projects, insights, and journey. Feel free to 
-                explore and don&apos;t hesitate to reach out if you&apos;d like to connect or collaborate.
-              </p>
-            </div>
-          </div>
-        </section>
-        
-        <section>
-          <h2 className="font-serif text-3xl md:text-4xl text-primary mb-8">Latest Work</h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="group bg-white p-8 rounded-lg shadow-sm border border-light/50 hover:shadow-md transition-all duration-300 hover:-translate-y-1">
-              <h3 className="font-serif text-2xl md:text-3xl text-primary mb-3">Project 1</h3>
-              <p className="text-secondary mb-4">
-                A brief description of the project and its key features. Highlight what makes it special 
-                and the technologies used.
-              </p>
-              <div className="flex flex-wrap gap-2 mt-6">
-                <span className="inline-flex items-center bg-accent/10 text-accent text-sm font-medium px-3 py-1.5 rounded-full">
-                  React
-                </span>
-                <span className="inline-flex items-center bg-accent/10 text-accent text-sm font-medium px-3 py-1.5 rounded-full">
-                  TypeScript
-                </span>
-              </div>
-            </div>
-            
-            <div className="group bg-white p-8 rounded-lg shadow-sm border border-light/50 hover:shadow-md transition-all duration-300 hover:-translate-y-1">
-              <h3 className="font-serif text-2xl md:text-3xl text-primary mb-3">Project 2</h3>
-              <p className="text-secondary mb-4">
-                Another project description that showcases your skills and expertise. Keep it concise 
-                but informative.
-              </p>
-              <div className="flex flex-wrap gap-2 mt-6">
-                <span className="inline-flex items-center bg-accent/10 text-accent text-sm font-medium px-3 py-1.5 rounded-full">
-                  Next.js
-                </span>
-                <span className="inline-flex items-center bg-accent/10 text-accent text-sm font-medium px-3 py-1.5 rounded-full">
-                  Tailwind CSS
-                </span>
-              </div>
-            </div>
-          </div>
-        </section>
-      </main>
-      
-      <footer className="bg-primary text-light py-8 mt-12">
-        <div className="container">
-          <p className="text-center">&copy; {new Date().getFullYear()} Christopher Poole. All rights reserved.</p>
+
+      {/* Main Content */}
+      <main className='relative z-10 container mx-auto px-4 py-16 mt-10'>
+        <div className='max-w-[600px] mx-auto text-center font-sans font-light text-4xl text-[#574f4d] leading-12'>
+          <p>“He designed around how we live...</p>
+          <p>we just feel so much more connected as a family now.”</p>
         </div>
-      </footer>
+      </main>
     </div>
   );
 }
