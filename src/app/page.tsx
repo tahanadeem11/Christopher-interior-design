@@ -1,8 +1,5 @@
 "use client";
-import Image from "next/image";
-
-// assets
-import Logo from "@/assets/logo.png";
+import Header from "@/components/Header";
 
 export default function Home() {
   return (
@@ -16,22 +13,7 @@ export default function Home() {
       </div>
 
       {/* Header with Logo and Menu */}
-      <header className='relative z-10 py-4 px-6 w-full -mt-16'>
-        <div className='max-w-7xl mx-auto flex justify-between items-center'>
-          {/* Logo */}
-          <div className='relative w-80 h-80'>
-            <Image src={Logo} alt='Christopher Poole Logo' className='w-full h-full object-contain' priority />
-          </div>
-
-          {/* Menu Button */}
-          <button
-            className='text-[#574f4d] text-lg tracking-wider uppercase hover:opacity-80 transition-opacity px-6 py-2 font-sans font-light'
-            onClick={() => console.log("Menu clicked")}
-          >
-            Menu
-          </button>
-        </div>
-      </header>
+      <Header />
 
       {/* Main Content */}
       <main className='relative z-10 container mx-auto px-4 py-16 mt-10'>
