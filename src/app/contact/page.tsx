@@ -2,6 +2,8 @@
 import Header from "@/components/Header";
 import Logo from "@/assets/home/logo.png";
 import { useState } from "react";
+import Image from "next/image";
+import BGImage from "@/assets/home/bg.png";
 
 import InstaIcon from "@/assets/contacts/CP insta icon.png";
 import PinterestIcon from "@/assets/contacts/CP pinterest icon.png";
@@ -30,9 +32,19 @@ export default function Contact() {
 
   return (
     <div className='relative min-h-screen overflow-y-auto'>
-      {/* Background Video */}
+      {/* Background: static image base, video overlay only on md+ to save bandwidth */}
       <div className='absolute inset-0 z-0'>
-        <video autoPlay loop muted playsInline className='w-full h-full object-cover min-w-full min-h-full'>
+        <Image src={BGImage} alt='Background' fill className='object-cover' priority />
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload='none'
+          poster='./media/video-poster.png'
+          aria-hidden='true'
+          className='hidden md:block w-full h-full object-cover min-w-full min-h-full'
+        >
           <source src='./media/home-background.mp4' type='video/mp4' />
         </video>
       </div>
