@@ -82,7 +82,7 @@ export default function Contact() {
             <div className='bg-white/10 backdrop-blur-sm p-8 -mt-8'>
               <form onSubmit={handleSubmit} className='space-y-6'>
                 <div className='relative'>
-                  <label htmlFor='name' className='block text-[#574f4d] text-sm font-medium mb-2'>
+                  <label htmlFor='name' className='block text-[#574f4d] text-sm font-medium mb-2 font-sans uppercase'>
                     Name
                   </label>
                   <div className='relative'>
@@ -100,7 +100,7 @@ export default function Contact() {
                 </div>
 
                 <div className='relative'>
-                  <label htmlFor='email' className='block text-[#574f4d] text-sm font-medium mb-2'>
+                  <label htmlFor='email' className='block text-[#574f4d] text-sm font-medium mb-2 font-sans uppercase'>
                     Email
                   </label>
                   <div className='relative'>
@@ -118,7 +118,10 @@ export default function Contact() {
                 </div>
 
                 <div className='relative'>
-                  <label htmlFor='message' className='block text-[#574f4d] text-sm font-medium mb-2'>
+                  <label
+                    htmlFor='message'
+                    className='block text-[#574f4d] text-sm font-medium mb-2 font-sans uppercase'
+                  >
                     Message
                   </label>
                   <div className='relative'>
