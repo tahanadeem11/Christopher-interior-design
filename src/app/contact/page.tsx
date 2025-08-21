@@ -1,19 +1,24 @@
 "use client";
 import Header from "@/components/Header";
 import Logo from "@/assets/home/logo.png";
-import { useState } from "react";
+import { useEffect, useState, useActionState } from "react";
 import Image from "next/image";
 import BGImage from "@/assets/home/bg.png";
 
 import InstaIcon from "@/assets/contacts/CP insta icon.png";
 import PinterestIcon from "@/assets/contacts/CP pinterest icon.png";
 import ImageZoom from "@/components/shared/ImageZoom";
+import { sendContactEmail } from "./actions";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: "",
+  });
+  const [state, formAction, isPending] = useActionState(sendContactEmail, {
+    ok: null,
+    message: null,
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -24,11 +29,10 @@ export default function Contact() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle form submission here
-    console.log("Form submitted:", formData);
-  };
+  // reset the form on successful send
+  useEffect(() => {
+    if (state.ok) setFormData({ name: "", email: "", message: "" });
+  }, [state.ok]);
 
   return (
     <div className='relative min-h-screen overflow-y-auto'>
@@ -92,7 +96,7 @@ export default function Contact() {
 
             {/* Right Side - Contact Form */}
             <div className='bg-white/10 backdrop-blur-sm p-8 -mt-8'>
-              <form onSubmit={handleSubmit} className='space-y-6'>
+              <form action={formAction} className='space-y-6'>
                 <div className='relative'>
                   <label htmlFor='name' className='block text-[#574f4d] text-sm font-medium mb-2 font-sans uppercase'>
                     Name
@@ -150,11 +154,23 @@ export default function Contact() {
                   </div>
                 </div>
 
+                {state.message && (
+                  <p
+                    className={`${state.ok ? "text-green-600" : "text-red-600"} text-sm`}
+                    role='status'
+                    aria-live='polite'
+                  >
+                    {state.message}
+                  </p>
+                )}
+
                 {/* Submit Button with Chevron Forward Icon */}
                 <div className='flex justify-end'>
                   <button
                     type='submit'
-                    className='flex items-center justify-center w-12 h-12 bg-[#574f4d] text-white rounded-full hover:bg-[#574f4d]/80 transition-colors focus:outline-none focus:ring-2 focus:ring-[#574f4d]/50'
+                    disabled={isPending}
+                    aria-busy={isPending}
+                    className='flex items-center justify-center w-12 h-12 bg-[#574f4d] text-white rounded-full hover:bg-[#574f4d]/80 transition-colors focus:outline-none focus:ring-2 focus:ring-[#574f4d]/50 disabled:opacity-50 disabled:cursor-not-allowed'
                     aria-label='Submit form'
                   >
                     <svg
