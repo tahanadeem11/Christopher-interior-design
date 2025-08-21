@@ -1,8 +1,10 @@
 @import "tailwindcss";
 
 @layer base {
-  * {
-    cursor: none !important;
+  @media (pointer: fine) and (hover: hover) {
+    * {
+      cursor: none !important;
+    }
   }
 
   .custom-cursor {
@@ -17,6 +19,13 @@
     z-index: 9999;
     mix-blend-mode: difference;
     will-change: transform;
+  }
+  /* hide custom cursor on touch / coarse-pointer devices */
+  @media (pointer: coarse), (hover: none) {
+    .custom-cursor,
+    .cursor-dot {
+      display: none !important;
+    }
   }
 
   .custom-cursor::before {
