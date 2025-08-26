@@ -183,8 +183,8 @@ export const HorizontalScrollContainer = forwardRef<HorizontalScrollContainerRef
     }, [scrollSpeed, isHorizontal, startAnimation]);
 
     return (
-      <div ref={containerRef} className={`lg:overflow-hidden overflow-visible min-w-screen ${className}`}>
-        <div ref={contentRef} className='flex lg:flex-row flex-col' style={{ willChange: "transform" }}>
+      <div ref={containerRef} className={`lg:overflow-hidden overflow-visible w-full lg:h-full ${className}`}>
+        <div ref={contentRef} className='flex lg:flex-row flex-col lg:h-full lg:items-center' style={{ willChange: "transform" }}>
           {children}
         </div>
       </div>

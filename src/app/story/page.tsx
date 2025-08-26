@@ -32,7 +32,7 @@ export default function Story() {
   };
 
   return (
-    <div className='relative min-h-screen overflow-hidden'>
+    <div className='relative h-screen overflow-hidden'>
       {/* Background Image */}
       <div className='absolute inset-0 z-0'>
         <Image
@@ -46,7 +46,7 @@ export default function Story() {
       <Header logo={Logo} buttonClassName='text-[#D6D5C9]' />
 
       {/* Main Content */}
-      <main className='relative z-10 container pt-32 sm:pt-36 md:pt-40 lg:pt-44 xl:pt-48 pb-20'>
+      <main className='relative z-10 h-full flex items-center'>
         <HorizontalScrollContainer ref={scrollContainerRef} onScrollChange={handleScrollChange}>
           {/* text content */}
           <div className='lg:max-w-[900px] lg:min-w-[900px] lg:pl-30 w-full max-w-[900px] px-6'>
@@ -83,13 +83,13 @@ export default function Story() {
           />
 
           {/* Video Section */}
-          <div className='lg:max-w-[900px] lg:min-w-[900px] lg:pl-30 w-full max-w-[900px] px-6'>
+          <div className='relative lg:max-w-[50vw] lg:min-w-[500px] lg:h-[60vh] lg:ml-[1vw] lg:mt-4 w-full h-auto px-4 sm:px-6 my-6 sm:my-8 lg:px-0'>
             <video 
               autoPlay 
               loop 
               muted 
               playsInline 
-              className='w-full h-[200px] sm:h-[250px] md:h-[300px] lg:h-[350px] object-cover rounded-lg'
+              className='w-full lg:h-[60vh] h-[200px] sm:h-[250px] md:h-[300px] object-cover rounded-lg'
             >
               <source src='./media/home-background.mp4' type='video/mp4' />
             </video>
