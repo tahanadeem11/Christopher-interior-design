@@ -32,7 +32,7 @@ export default function Story() {
   };
 
   return (
-    <div className='relative h-screen overflow-hidden'>
+    <div className='relative min-h-screen lg:h-screen overflow-hidden'>
       {/* Background Image */}
       <div className='absolute inset-0 z-0'>
         <Image
@@ -46,7 +46,7 @@ export default function Story() {
       <Header logo={Logo} buttonClassName='text-[#D6D5C9]' />
 
       {/* Main Content */}
-      <main className='relative z-10 h-full flex items-center'>
+      <main className='relative z-10 lg:h-full lg:flex lg:items-center pt-20 sm:pt-24 md:pt-28 lg:pt-0'>
         <HorizontalScrollContainer ref={scrollContainerRef} onScrollChange={handleScrollChange}>
           {/* text content */}
           <div className='lg:max-w-[900px] lg:min-w-[900px] lg:pl-30 w-full max-w-[900px] px-6'>
@@ -94,11 +94,21 @@ export default function Story() {
               <source src='./media/home-background.mp4' type='video/mp4' />
             </video>
             
-            <div className='mt-4'>
-              <h3 className='text-[#e7e7dc] text-lg sm:text-xl md:text-xl lg:text-xl font-sans leading-4'>Journey & Vision</h3>
-              <p className='text-[#e7e7dc] font-sans font-light text-base sm:text-lg md:text-xl lg:text-[22px] leading-relaxed mt-2'>
-                Every space tells a story. This video captures the essence of our design philosophy and the emotional connection we create through thoughtful architecture.
-              </p>
+            <div className='flex flex-row justify-start gap-4 lg:gap-10 lg:mt-4 mt-8'>
+              <div className='flex flex-col'>
+                <Link href='/ethos'>
+                  <h2 className='text-[#e7e7dc] font-[300] text-lg md:text-lg sm:text-lg uppercase'>THE ETHOS</h2>
+                  <div className='-mt-2 w-8 h-px bg-white/50'></div>
+                </Link>
+              </div>
+              <div className='flex flex-col'>
+                <Link href='/projects'>
+                  <h2 className='text-[#e7e7dc] font-[300] text-lg md:text-lg sm:text-lg uppercase'>
+                    FUTURE PROJECTS
+                  </h2>
+                  <div className='-mt-2 w-8 h-px bg-white/50'></div>
+                </Link>
+              </div>
             </div>
           </div>
 
@@ -218,7 +228,6 @@ export default function Story() {
             className='w-full lg:h-full h-auto object-cover'
             containerClassName='relative lg:max-w-[50vw] lg:min-w-[400px] lg:h-[60vh] lg:ml-[2vw] w-full h-auto px-6 my-10 lg:my-0'
           />
-          <div className='hidden lg:block lg:min-w-[2vw]'></div>
         </HorizontalScrollContainer>
 
         {/* Go Back to Start Button */}
