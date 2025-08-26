@@ -16,7 +16,7 @@ export default function LoadingOverlay({ visible = true, message = "Loading", fa
   return (
     <div
       className={
-        "fixed inset-0 z-[11000] transition-opacity duration-500 bg-[#1A403B]" +
+        "fixed inset-0 z-[11000] transition-all duration-2000 ease-in-out bg-[#1A403B]" +
         (fadeOut ? "opacity-0 pointer-events-none" : "opacity-100")
       }
     >
@@ -25,16 +25,21 @@ export default function LoadingOverlay({ visible = true, message = "Loading", fa
         <Image src={BGImage} alt='Background' fill className='object-cover' priority />
       </div>
 
-      {/* centered logo and dots */}
-      <div className='relative h-full w-full flex flex-col items-center justify-center gap-4 text-[#e7e7dc]'>
-        <div className='w-[220px] md:w-[280px]'>
-          <Image src={StoryLogo} alt='Christopher Poole' className='w-full h-auto object-contain' priority />
-        </div>
-        <div className='flex items-center gap-2' aria-hidden>
-          <span className='sr-only'>{message}…</span>
-          <div className='w-2 h-2 rounded-full bg-[#e7e7dc] animate-bounce [animation-delay:0ms]' />
-          <div className='w-2 h-2 rounded-full bg-[#e7e7dc] animate-bounce [animation-delay:150ms]' />
-          <div className='w-2 h-2 rounded-full bg-[#e7e7dc] animate-bounce [animation-delay:300ms]' />
+      {/* centered logo only with smooth fade, calm effects, and gentle shake */}
+      <div className='relative h-full w-full flex flex-col items-center justify-center text-[#e7e7dc]'>
+        <div 
+          className={`w-[220px] md:w-[280px] transition-all duration-2000 ease-in-out ${
+            fadeOut ? 'opacity-0 scale-90' : 'opacity-100 scale-100'
+          }`}
+        >
+          <Image 
+            src={StoryLogo} 
+            alt='Christopher Poole' 
+            className={`w-full h-auto object-contain transition-all duration-2000 ease-in-out hover:scale-110 ${
+              !fadeOut ? 'animate-pulse' : ''
+            }`}
+            priority 
+          />
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
+import { useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -27,24 +27,15 @@ interface ScrollInfo {
 }
 
 export default function Projects() {
-  const [showScrollControls, setShowScrollControls] = useState(false);
-  const [isBelowLg, setIsBelowLg] = useState(false);
   const scrollContainerRef = useRef<HorizontalScrollContainerRef>(null);
 
   const handleScrollChange = (info: ScrollInfo) => {
-    setShowScrollControls(info.scrollPosition > 50); // Show controls after scrolling 50px
+    // Scroll change handler for future use
   };
 
   const scrollToStart = () => {
     scrollContainerRef.current?.resetScroll();
   };
-
-  useEffect(() => {
-    const onResize = () => setIsBelowLg(window.innerWidth < 1024);
-    onResize();
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-  }, []);
 
   return (
     <div className='relative min-h-screen overflow-hidden'>
@@ -58,7 +49,7 @@ export default function Projects() {
       </div>
 
       {/* Header with Logo and Menu */}
-      <Header logo={Logo} isShowMenu={isBelowLg || showScrollControls} buttonClassName='text-[#D6D5C9]' />
+      <Header logo={Logo} buttonClassName='text-[#D6D5C9]' />
 
       {/* Main Content */}
       <main className='relative z-10 container -mt-8'>
@@ -188,27 +179,7 @@ export default function Projects() {
         </HorizontalScrollContainer>
 
         {/* Go Back to Start Button */}
-        {showScrollControls && (
-          <button
-            onClick={scrollToStart}
-            className='fixed bottom-6 right-6 z-20 text-white p-3 rounded-full transition-all duration-300 backdrop-blur-sm'
-            aria-label='Go back to start'
-          >
-            <svg
-              width='40'
-              height='40'
-              viewBox='0 0 24 24'
-              fill='none'
-              stroke='currentColor'
-              strokeWidth='1'
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              className='rotate-180'
-            >
-              <polyline points='9,18 15,12 9,6'></polyline>
-            </svg>
-          </button>
-        )}
+        {/* Removed scroll controls as menu is always visible */}
       </main>
     </div>
   );

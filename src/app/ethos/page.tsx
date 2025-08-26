@@ -1,18 +1,10 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
+import { useRef } from "react";
 import Header from "@/components/Header";
 import ImageZoom from "@/components/shared/ImageZoom";
 
 // components
 import { HorizontalScrollContainer, HorizontalScrollContainerRef } from "@/components/shared/HorizontalScrollContainer";
-
-// types
-interface ScrollInfo {
-  scrollPosition: number;
-  maxScroll: number;
-  scrollPercentage: number;
-  direction: "left" | "right";
-}
 
 // assets
 import BGImage from "@/assets/bg-image.jpg";
@@ -25,24 +17,15 @@ import Image5 from "@/assets/ethos/image5.jpg";
 import Image from "next/image";
 
 export default function Home() {
-  const [showScrollControls, setShowScrollControls] = useState(false);
-  const [isBelowLg, setIsBelowLg] = useState(false);
   const scrollContainerRef = useRef<HorizontalScrollContainerRef>(null);
 
-  const handleScrollChange = (info: ScrollInfo) => {
-    setShowScrollControls(info.scrollPosition > 50); // Show controls after scrolling 50px
+  const handleScrollChange = () => {
+    // Scroll change handler for future use
   };
 
   const scrollToStart = () => {
     scrollContainerRef.current?.resetScroll();
   };
-
-  useEffect(() => {
-    const onResize = () => setIsBelowLg(window.innerWidth < 1024);
-    onResize();
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-  }, []);
 
   return (
     <div className='relative min-h-screen overflow-hidden'>
@@ -56,106 +39,126 @@ export default function Home() {
       </div>
 
       {/* Header with Logo and Menu */}
-      <Header logo={Logo} isShowMenu={isBelowLg || showScrollControls} buttonClassName='text-[#D6D5C9]' />
+      <Header logo={Logo} buttonClassName='text-[#D6D5C9]' />
 
       {/* Main Content */}
-      <main className='relative z-10 container '>
-        <HorizontalScrollContainer className='-mt-8' ref={scrollContainerRef} onScrollChange={handleScrollChange}>
+      <main className='relative z-10 container'>
+        <HorizontalScrollContainer className='-mt-4' ref={scrollContainerRef} onScrollChange={handleScrollChange}>
           {/* text content */}
-          <div className='lg:max-w-[900px] lg:min-w-[900px] lg:pl-30 w-full max-w-[900px] px-6'>
-            <h1 className='text-[#e7e7dc] text-4xl md:text-3xl sm:text-2xl'>THE ETHOS</h1>
-            <h2 className='text-[#e7e7dc] font-[300] text-2xl md:text-xl sm:text-lg'>Our work is guided by feeling.</h2>
+          <div className='lg:max-w-[900px] lg:min-w-[900px] lg:pl-30 w-full max-w-[900px] px-4 sm:px-6'>
+            <h1 className='text-[#e7e7dc] text-2xl sm:text-3xl md:text-4xl lg:text-4xl leading-tight'>THE ETHOS</h1>
+            <h2 className='text-[#e7e7dc] font-[300] text-lg sm:text-xl md:text-2xl lg:text-2xl leading-relaxed mt-4 sm:mt-6'>Our work is guided by feeling.</h2>
 
-            <h3 className='text-[#e7e7dc] text-xl md:text-lg font-sans leading-4 mt-14'>Peace</h3>
-            <p className='text-[#e7e7dc] font-sans font-light text-[22px] md:text-[18px] sm:text-[16px]'>
+            <h3 className='text-[#e7e7dc] text-lg sm:text-xl md:text-xl lg:text-xl font-sans leading-4 mt-8 sm:mt-10 md:mt-14'>Peace</h3>
+            <p className='text-[#e7e7dc] font-sans font-light text-base sm:text-lg md:text-xl lg:text-[22px] leading-relaxed'>
               The design should ground you. Light, air, and materials that calm the nervous system.
             </p>
 
             {/* verticle bar */}
-            <div className='ml-2 mt-2 mb-6 w-px h-8 bg-white/40'></div>
+            <div className='ml-2 mt-2 mb-4 sm:mb-6 w-px h-6 sm:h-8 bg-white/40'></div>
 
-            <h3 className='text-[#e7e7dc] text-[22px] md:text-[20px] font-sans leading-4'>Simplicity</h3>
-            <p className='text-[#e7e7dc] font-sans font-light text-[22px] md:text-[18px] sm:text-[16px]'>
+            <h3 className='text-[#e7e7dc] text-lg sm:text-xl md:text-xl lg:text-[22px] font-sans leading-4'>Simplicity</h3>
+            <p className='text-[#e7e7dc] font-sans font-light text-base sm:text-lg md:text-xl lg:text-[22px] leading-relaxed'>
               Nothing extra. Everything necessary. Beauty found in restraint.
             </p>
 
             {/* verticle bar */}
-            <div className='ml-2 mt-2 mb-6 w-px h-8 bg-white/40'></div>
+            <div className='ml-2 mt-2 mb-4 sm:mb-6 w-px h-6 sm:h-8 bg-white/40'></div>
 
-            <h3 className='text-[#e7e7dc] text-[22px] md:text-[20px] font-sans leading-4'>Flow</h3>
-            <p className='text-[#e7e7dc] font-sans font-light text-[22px] md:text-[18px] sm:text-[16px]'>
-              From one room to the next, one breath to the next—our work moves like water.
+            <h3 className='text-[#e7e7dc] text-lg sm:text-xl md:text-xl lg:text-xl font-sans leading-4'>Flow</h3>
+            <p className='text-[#e7e7dc] font-sans font-light text-base sm:text-lg md:text-xl lg:text-[22px] leading-relaxed'>
+              From one room to the next, one breath to the next&mdash;our work moves like water.
             </p>
           </div>
 
-          {/* image 1 */}
-          <div className='relative lg:max-w-[50vw] lg:min-w-[850px] lg:h-[50vh] lg:ml-[30vw] lg:mt-8 w-full h-auto px-8 my-10 lg:my-0'>
-            <div className='hidden lg:flex absolute bg-black/70 text-lg font-light text-white/80 w-[55%] h-[50%] px-6 py-5 lg:mr-[60px] lg:-mb-[1px] bottom-0 right-0 justify-center items-center text-right leading-relaxed z-10'>
+          {/* image 1 - Peace & Serenity */}
+          <div className='relative lg:max-w-[50vw] lg:min-w-[850px] lg:h-[50vh] lg:ml-[30vw] lg:mt-4 w-full h-auto px-4 sm:px-6 md:px-8 my-6 sm:my-8 lg:my-0'>
+            <div className='hidden lg:flex absolute bg-black/70 text-lg font-light text-white/90 w-[55%] h-[50%] px-6 py-5 lg:mr-[60px] lg:-mb-[1px] bottom-0 right-0 justify-center items-center text-right leading-relaxed z-10 rounded-tl-lg'>
               <span className='block'>
-                The stone sink rests on a reclaimed timber surface, its raw form echoing in imperfection. A steel-framed
-                mirror adds structure, while the lighting — placed at face level — was carefully considered to avoid
-                harsh overhead shadows.
+                Peace & Serenity: Natural stone and reclaimed timber create a grounding sanctuary. Every element chosen to calm the nervous system.
               </span>
             </div>
-            <ImageZoom src={Image1} alt='' className='w-full lg:h-[50vh] h-auto object-cover' />
+            <ImageZoom src={Image1} alt='Peace & Serenity' className='w-full lg:h-[50vh] h-[200px] sm:h-[250px] md:h-[300px] lg:h-auto object-cover' />
           </div>
 
-          {/* image 2 */}
-          <ImageZoom
-            src={Image2}
-            alt=''
-            className='w-full lg:h-full h-auto object-cover'
-            containerClassName='relative lg:w-auto w-full lg:h-[50vh] h-auto lg:ml-[5vw] lg:min-w-[850px] px-6 my-10 lg:px-0'
-          />
+          {/* image 2 - Simplicity & Restraint */}
+          <div className='relative lg:max-w-[50vw] lg:min-w-[850px] lg:h-[50vh] lg:ml-[5vw] lg:mt-4 w-full h-auto px-4 sm:px-6 my-6 sm:my-8 lg:px-0'>
+            <div className='hidden lg:flex absolute bg-black/70 text-lg font-light text-white/90 w-[55%] h-[50%] px-6 py-5 lg:mr-[60px] lg:-mb-[1px] bottom-0 right-0 justify-center items-center text-right leading-relaxed z-10 rounded-tl-lg'>
+              <span className='block'>
+                Simplicity & Restraint: Beauty found in what&apos;s necessary. Clean lines and thoughtful minimalism create spaces that breathe.
+              </span>
+            </div>
+            <ImageZoom
+              src={Image2}
+              alt='Simplicity & Restraint'
+              className='w-full lg:h-full h-[200px] sm:h-[250px] md:h-[300px] lg:h-auto object-cover'
+            />
+          </div>
 
-          {/* image 3 */}
-          <ImageZoom
-            src={Image3}
-            alt=''
-            className='w-full lg:h-full h-auto object-cover'
-            containerClassName='relative lg:w-auto w-full lg:h-[50vh] h-auto lg:ml-[5vw] lg:min-w-[850px] px-6 my-10 lg:px-0'
-          />
+          {/* image 3 - Flow & Movement */}
+          <div className='relative lg:max-w-[50vw] lg:min-w-[850px] lg:h-[50vh] lg:ml-[5vw] lg:mt-4 w-full h-auto px-4 sm:px-6 my-6 sm:my-8 lg:px-0'>
+            <div className='hidden lg:flex absolute bg-black/70 text-lg font-light text-white/90 w-[55%] h-[50%] px-6 py-5 lg:mr-[60px] lg:-mb-[1px] bottom-0 right-0 justify-center items-center text-right leading-relaxed z-10 rounded-tl-lg'>
+              <span className='block'>
+                Flow & Movement: Spaces that move like water. Seamless transitions create a sense of continuous, natural movement.
+              </span>
+            </div>
+            <ImageZoom
+              src={Image3}
+              alt='Flow & Movement'
+              className='w-full lg:h-full h-[200px] sm:h-[250px] md:h-[300px] lg:h-auto object-cover'
+            />
+          </div>
 
-          {/* image 4 */}
-          <ImageZoom
-            src={Image4}
-            alt=''
-            className='w-full lg:h-full h-auto object-cover'
-            containerClassName='relative lg:w-auto w-full lg:h-[50vh] h-auto lg:ml-[5vw] lg:min-w-[850px] px-6 my-10 lg:px-0'
-          />
+          {/* image 4 - Light & Air */}
+          <div className='relative lg:max-w-[50vw] lg:min-w-[850px] lg:h-[50vh] lg:ml-[5vw] lg:mt-4 w-full h-auto px-4 sm:px-6 my-6 sm:my-8 lg:px-0'>
+            <div className='hidden lg:flex absolute bg-black/70 text-lg font-light text-white/90 w-[55%] h-[50%] px-6 py-5 lg:mr-[60px] lg:-mb-[1px] bottom-0 right-0 justify-center items-center text-right leading-relaxed z-10 rounded-tl-lg'>
+              <span className='block'>
+                Light & Air: Natural illumination creates depth and warmth. Every window and opening thoughtfully placed for optimal flow.
+              </span>
+            </div>
+            <ImageZoom
+              src={Image4}
+              alt='Light & Air'
+              className='w-full lg:h-full h-[200px] sm:h-[250px] md:h-[300px] lg:h-auto object-cover'
+            />
+          </div>
 
-          {/* image 5 */}
-          <ImageZoom
-            src={Image5}
-            alt=''
-            className='w-full lg:h-full h-auto object-cover'
-            containerClassName='relative lg:w-auto w-full lg:h-[50vh] h-auto lg:ml-[5vw] lg:min-w-[850px] px-6 my-10 lg:px-0'
-          />
+          {/* image 5 - Materials & Texture */}
+          <div className='relative lg:max-w-[50vw] lg:min-w-[850px] lg:h-[50vh] lg:ml-[5vw] lg:mt-4 w-full h-auto px-4 sm:px-6 my-6 sm:my-8 lg:px-0'>
+            <div className='hidden lg:flex absolute bg-black/70 text-lg font-light text-white/90 w-[55%] h-[50%] px-6 py-5 lg:mr-[60px] lg:-mb-[1px] bottom-0 right-0 justify-center items-center text-right leading-relaxed z-10 rounded-tl-lg'>
+              <span className='block'>
+                Materials & Texture: Raw, honest materials that age beautifully. Imperfections celebrated as marks of character and time.
+              </span>
+            </div>
+            <ImageZoom
+              src={Image5}
+              alt='Materials & Texture'
+              className='w-full lg:h-full h-[200px] sm:h-[250px] md:h-[300px] lg:h-auto object-cover'
+            />
+          </div>
           <div className='hidden lg:block lg:min-w-[30vw]'></div>
         </HorizontalScrollContainer>
 
         {/* Go Back to Start Button */}
-        {showScrollControls && (
-          <button
-            onClick={scrollToStart}
-            className='fixed bottom-6 right-6 z-20 text-white p-3 rounded-full transition-all duration-300 backdrop-blur-sm'
-            aria-label='Go back to start'
+        <button
+          onClick={scrollToStart}
+          className='fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-20 text-white p-2 sm:p-3 rounded-full transition-all duration-300 backdrop-blur-sm'
+          aria-label='Go back to start'
+        >
+          <svg
+            width='32'
+            height='32'
+            viewBox='0 0 24 24'
+            fill='none'
+            stroke='currentColor'
+            strokeWidth='1'
+            strokeLinecap='round'
+            strokeLinejoin='round'
+            className='rotate-180'
           >
-            <svg
-              width='40'
-              height='40'
-              viewBox='0 0 24 24'
-              fill='none'
-              stroke='currentColor'
-              strokeWidth='1'
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              className='rotate-180'
-            >
-              <polyline points='9,18 15,12 9,6'></polyline>
-            </svg>
-          </button>
-        )}
+            <polyline points='9,18 15,12 9,6'></polyline>
+          </svg>
+        </button>
       </main>
     </div>
   );
