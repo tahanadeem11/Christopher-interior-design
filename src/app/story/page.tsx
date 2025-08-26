@@ -1,9 +1,8 @@
 "use client";
-import Link from "next/link";
-import Image from "next/image";
 import { useRef } from "react";
 import Header from "@/components/Header";
-import ImageZoom from "@/components/shared/ImageZoom";
+import Image from "next/image";
+import Link from "next/link";
 
 // components
 import { HorizontalScrollContainer, HorizontalScrollContainerRef } from "@/components/shared/HorizontalScrollContainer";
@@ -46,7 +45,7 @@ export default function Story() {
       <Header logo={Logo} buttonClassName='text-[#D6D5C9]' />
 
       {/* Main Content */}
-      <main className='relative z-10 container -mt-8'>
+      <main className='relative z-10 container pt-24 sm:pt-28 md:pt-32'>
         <HorizontalScrollContainer ref={scrollContainerRef} onScrollChange={handleScrollChange}>
           {/* text content */}
           <div className='lg:max-w-[900px] lg:min-w-[900px] lg:pl-30 w-full max-w-[900px] px-6'>
@@ -75,21 +74,19 @@ export default function Story() {
           </div>
 
           {/* image 1 */}
-          <ImageZoom
+          <Image
             src={Image1}
             alt=''
             className='w-full h-full object-cover'
-            containerClassName='relative lg:max-w-[50vw] lg:min-w-[400px] h-[45vh] md:h-[55vh] lg:h-[60vh] lg:ml-[10vw] w-full px-6 my-10 lg:my-0'
           />
 
           <div className='relative lg:w-auto w-full h-auto lg:ml-0 flex flex-col items-center px-6 my-10 lg:my-0 lg:px-0 lg:min-w-[100vw]'>
             <div className='lg:w-full w-full flex justify-center'>
               <div>
-                <ImageZoom
+                <Image
                   src={Image2}
                   alt=''
                   className='w-full lg:h-full h-auto object-cover'
-                  containerClassName='relative w-full lg:w-[50vw] lg:h-[55vh]'
                 />
                 <div className='flex flex-row justify-start gap-4 lg:gap-10 lg:mt-4 mt-8'>
                   <div className='flex flex-col'>
@@ -134,11 +131,10 @@ export default function Story() {
           </div>
 
           {/* image 3 */}
-          <ImageZoom
+          <Image
             src={Image3}
             alt=''
             className='w-full lg:h-full h-auto object-cover'
-            containerClassName='relative lg:max-w-[50vw] lg:min-w-[400px] lg:h-[60vh] lg:ml-[10vw] w-full h-auto px-6 my-10 lg:my-0'
           />
 
           {/* section 3 */}
@@ -164,11 +160,10 @@ export default function Story() {
           </div>
 
           {/* image 4 */}
-          <ImageZoom
+          <Image
             src={Image4}
             alt=''
             className='w-full lg:h-full h-auto object-cover'
-            containerClassName='relative lg:max-w-[50vw] lg:min-w-[400px] lg:h-[60vh] lg:ml-[10vw] w-full h-auto px-6 my-10 lg:my-0'
           />
 
           {/* section 5 */}
@@ -192,11 +187,10 @@ export default function Story() {
           </div>
 
           {/* image 5 */}
-          <ImageZoom
+          <Image
             src={Image2}
             alt=''
             className='w-full lg:h-full h-auto object-cover'
-            containerClassName='relative lg:max-w-[50vw] lg:min-w-[400px] lg:h-[60vh] lg:ml-[10vw] w-full h-auto px-6 my-10 lg:my-0'
           />
           <div className='hidden lg:block lg:min-w-[5vw]'></div>
         </HorizontalScrollContainer>

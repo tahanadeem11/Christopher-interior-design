@@ -1,7 +1,7 @@
 "use client";
 import { useRef } from "react";
 import Header from "@/components/Header";
-import ImageZoom from "@/components/shared/ImageZoom";
+import Image from "next/image";
 
 // components
 import { HorizontalScrollContainer, HorizontalScrollContainerRef } from "@/components/shared/HorizontalScrollContainer";
@@ -14,7 +14,6 @@ import Image2 from "@/assets/ethos/image2.jpeg";
 import Image3 from "@/assets/ethos/image3.jpeg";
 import Image4 from "@/assets/ethos/image4.jpeg";
 import Image5 from "@/assets/ethos/image5.jpg";
-import Image from "next/image";
 
 export default function Home() {
   const scrollContainerRef = useRef<HorizontalScrollContainerRef>(null);
@@ -42,7 +41,7 @@ export default function Home() {
       <Header logo={Logo} buttonClassName='text-[#D6D5C9]' />
 
       {/* Main Content */}
-      <main className='relative z-10 container'>
+      <main className='relative z-10 container pt-24 sm:pt-28 md:pt-32'>
         <HorizontalScrollContainer className='-mt-4' ref={scrollContainerRef} onScrollChange={handleScrollChange}>
           {/* text content */}
           <div className='lg:max-w-[900px] lg:min-w-[900px] lg:pl-30 w-full max-w-[900px] px-4 sm:px-6'>
@@ -58,7 +57,7 @@ export default function Home() {
             <div className='ml-2 mt-2 mb-4 sm:mb-6 w-px h-6 sm:h-8 bg-white/40'></div>
 
             <h3 className='text-[#e7e7dc] text-lg sm:text-xl md:text-xl lg:text-[22px] font-sans leading-4'>Simplicity</h3>
-            <p className='text-[#e7e7dc] font-sans font-light text-base sm:text-lg md:text-xl lg:text-[22px] leading-relaxed'>
+            <p className='text-[#e7e7dc] font-sans font-light text-base sm:text-lg md:text-xl lg:text-xl leading-relaxed'>
               Nothing extra. Everything necessary. Beauty found in restraint.
             </p>
 
@@ -78,7 +77,11 @@ export default function Home() {
                 Peace & Serenity: Natural stone and reclaimed timber create a grounding sanctuary. Every element chosen to calm the nervous system.
               </span>
             </div>
-            <ImageZoom src={Image1} alt='Peace & Serenity' className='w-full lg:h-[50vh] h-[200px] sm:h-[250px] md:h-[300px] lg:h-auto object-cover' />
+            <Image
+              src={Image1}
+              alt='Peace & Serenity'
+              className='w-full lg:h-[50vh] h-[200px] sm:h-[250px] md:h-[300px] lg:h-auto object-cover'
+            />
           </div>
 
           {/* image 2 - Simplicity & Restraint */}
@@ -88,7 +91,7 @@ export default function Home() {
                 Simplicity & Restraint: Beauty found in what&apos;s necessary. Clean lines and thoughtful minimalism create spaces that breathe.
               </span>
             </div>
-            <ImageZoom
+            <Image
               src={Image2}
               alt='Simplicity & Restraint'
               className='w-full lg:h-full h-[200px] sm:h-[250px] md:h-[300px] lg:h-auto object-cover'
@@ -99,10 +102,10 @@ export default function Home() {
           <div className='relative lg:max-w-[50vw] lg:min-w-[850px] lg:h-[50vh] lg:ml-[5vw] lg:mt-4 w-full h-auto px-4 sm:px-6 my-6 sm:my-8 lg:px-0'>
             <div className='hidden lg:flex absolute bg-black/70 text-lg font-light text-white/90 w-[55%] h-[50%] px-6 py-5 lg:mr-[60px] lg:-mb-[1px] bottom-0 right-0 justify-center items-center text-right leading-relaxed z-10 rounded-tl-lg'>
               <span className='block'>
-                Flow & Movement: Spaces that move like water. Seamless transitions create a sense of continuous, natural movement.
+                Flow & Movement: Spaces that guide you naturally from one moment to the next, creating a sense of continuous harmony.
               </span>
             </div>
-            <ImageZoom
+            <Image
               src={Image3}
               alt='Flow & Movement'
               className='w-full lg:h-full h-[200px] sm:h-[250px] md:h-[300px] lg:h-auto object-cover'
@@ -113,10 +116,10 @@ export default function Home() {
           <div className='relative lg:max-w-[50vw] lg:min-w-[850px] lg:h-[50vh] lg:ml-[5vw] lg:mt-4 w-full h-auto px-4 sm:px-6 my-6 sm:my-8 lg:px-0'>
             <div className='hidden lg:flex absolute bg-black/70 text-lg font-light text-white/90 w-[55%] h-[50%] px-6 py-5 lg:mr-[60px] lg:-mb-[1px] bottom-0 right-0 justify-center items-center text-right leading-relaxed z-10 rounded-tl-lg'>
               <span className='block'>
-                Light & Air: Natural illumination creates depth and warmth. Every window and opening thoughtfully placed for optimal flow.
+                Light & Air: Natural illumination and ventilation that make spaces feel alive and breathing, never heavy or closed.
               </span>
             </div>
-            <ImageZoom
+            <Image
               src={Image4}
               alt='Light & Air'
               className='w-full lg:h-full h-[200px] sm:h-[250px] md:h-[300px] lg:h-auto object-cover'
@@ -127,10 +130,10 @@ export default function Home() {
           <div className='relative lg:max-w-[50vw] lg:min-w-[850px] lg:h-[50vh] lg:ml-[5vw] lg:mt-4 w-full h-auto px-4 sm:px-6 my-6 sm:my-8 lg:px-0'>
             <div className='hidden lg:flex absolute bg-black/70 text-lg font-light text-white/90 w-[55%] h-[50%] px-6 py-5 lg:mr-[60px] lg:-mb-[1px] bottom-0 right-0 justify-center items-center text-right leading-relaxed z-10 rounded-tl-lg'>
               <span className='block'>
-                Materials & Texture: Raw, honest materials that age beautifully. Imperfections celebrated as marks of character and time.
+                Materials & Texture: Honest materials that age beautifully, telling the story of time and use through their natural patina.
               </span>
             </div>
-            <ImageZoom
+            <Image
               src={Image5}
               alt='Materials & Texture'
               className='w-full lg:h-full h-[200px] sm:h-[250px] md:h-[300px] lg:h-auto object-cover'

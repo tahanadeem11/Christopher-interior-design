@@ -7,7 +7,6 @@ import BGImage from "@/assets/home/bg.png";
 
 import InstaIcon from "@/assets/contacts/CP insta icon.png";
 import PinterestIcon from "@/assets/contacts/CP pinterest icon.png";
-import ImageZoom from "@/components/shared/ImageZoom";
 import { sendContactEmail } from "./actions";
 
 export default function Contact() {
@@ -80,7 +79,7 @@ export default function Contact() {
                   className='w-8 h-8 text-[#574f4d] hover:opacity-80 transition-opacity rounded-full overflow-clip'
                   aria-label='Instagram'
                 >
-                  <ImageZoom src={InstaIcon} alt='Instagram' className='w-full h-full' />
+                  <Image src={InstaIcon} alt='Instagram' className='w-full h-full' />
                 </a>
 
                 {/* Pinterest Icon */}
@@ -89,7 +88,7 @@ export default function Contact() {
                   className='w-8 h-8 text-[#574f4d] hover:opacity-80 transition-opacity rounded-full overflow-clip'
                   aria-label='Pinterest'
                 >
-                  <ImageZoom src={PinterestIcon} alt='Pinterest' className='w-full h-full' />
+                  <Image src={PinterestIcon} alt='Pinterest' className='w-full h-full' />
                 </a>
               </div>
             </div>

@@ -159,37 +159,5 @@
     border-radius: 8px;
   }
 
-  @keyframes calm-fade-zoom-in {
-    0% {
-      opacity: 0;
-      transform: scale(1.1) translateY(20px);
-    }
-    100% {
-      opacity: 1;
-      transform: scale(1) translateY(0);
-    }
-  }
-
-  @keyframes gentle-hover-zoom {
-    0% {
-      transform: scale(1);
-    }
-    100% {
-      transform: scale(1.02);
-    }
-  }
-
-  .image-zoom-effect {
-    opacity: 0;
-    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    will-change: transform, opacity;
-  }
-
-  .image-zoom-effect.is-visible {
-    animation: calm-fade-zoom-in 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  }
-
-  .image-zoom-effect:hover {
-    animation: gentle-hover-zoom 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  }
+  /* Removed problematic image zoom effects that caused disappearing images */
 }
