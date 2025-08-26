@@ -1,8 +1,9 @@
 "use client";
+import Link from "next/link";
+import Image from "next/image";
 import { useRef } from "react";
 import Header from "@/components/Header";
-import Image from "next/image";
-import Link from "next/link";
+import ImageZoom from "@/components/shared/ImageZoom";
 
 // components
 import { HorizontalScrollContainer, HorizontalScrollContainerRef } from "@/components/shared/HorizontalScrollContainer";
@@ -45,7 +46,7 @@ export default function Story() {
       <Header logo={Logo} buttonClassName='text-[#D6D5C9]' />
 
       {/* Main Content */}
-      <main className='relative z-10 container pt-24 sm:pt-28 md:pt-32'>
+      <main className='relative z-10 container pt-32 sm:pt-36 md:pt-40 lg:pt-44 xl:pt-48 pb-20'>
         <HorizontalScrollContainer ref={scrollContainerRef} onScrollChange={handleScrollChange}>
           {/* text content */}
           <div className='lg:max-w-[900px] lg:min-w-[900px] lg:pl-30 w-full max-w-[900px] px-6'>
@@ -74,19 +75,41 @@ export default function Story() {
           </div>
 
           {/* image 1 */}
-          <Image
+          <ImageZoom
             src={Image1}
             alt=''
             className='w-full h-full object-cover'
+            containerClassName='relative lg:max-w-[50vw] lg:min-w-[400px] h-[45vh] md:h-[55vh] lg:h-[60vh] lg:ml-[5vw] w-full px-6 my-10 lg:my-0'
           />
 
-          <div className='relative lg:w-auto w-full h-auto lg:ml-0 flex flex-col items-center px-6 my-10 lg:my-0 lg:px-0 lg:min-w-[100vw]'>
+          {/* Video Section */}
+          <div className='lg:max-w-[900px] lg:min-w-[900px] lg:pl-30 w-full max-w-[900px] px-6'>
+            <video 
+              autoPlay 
+              loop 
+              muted 
+              playsInline 
+              className='w-full h-[200px] sm:h-[250px] md:h-[300px] lg:h-[350px] object-cover rounded-lg'
+            >
+              <source src='./media/home-background.mp4' type='video/mp4' />
+            </video>
+            
+            <div className='mt-4'>
+              <h3 className='text-[#e7e7dc] text-lg sm:text-xl md:text-xl lg:text-xl font-sans leading-4'>Journey & Vision</h3>
+              <p className='text-[#e7e7dc] font-sans font-light text-base sm:text-lg md:text-xl lg:text-[22px] leading-relaxed mt-2'>
+                Every space tells a story. This video captures the essence of our design philosophy and the emotional connection we create through thoughtful architecture.
+              </p>
+            </div>
+          </div>
+
+          <div className='relative lg:w-auto w-full h-auto lg:ml-0 flex flex-col items-center px-6 my-10 lg:my-0 lg:px-0 lg:min-w-[60vw]'>
             <div className='lg:w-full w-full flex justify-center'>
               <div>
-                <Image
+                <ImageZoom
                   src={Image2}
                   alt=''
                   className='w-full lg:h-full h-auto object-cover'
+                  containerClassName='relative w-full lg:w-[50vw] lg:h-[55vh]'
                 />
                 <div className='flex flex-row justify-start gap-4 lg:gap-10 lg:mt-4 mt-8'>
                   <div className='flex flex-col'>
@@ -131,10 +154,11 @@ export default function Story() {
           </div>
 
           {/* image 3 */}
-          <Image
+          <ImageZoom
             src={Image3}
             alt=''
             className='w-full lg:h-full h-auto object-cover'
+            containerClassName='relative lg:max-w-[50vw] lg:min-w-[400px] lg:h-[60vh] lg:ml-[2vw] w-full h-auto px-6 my-10 lg:my-0'
           />
 
           {/* section 3 */}
@@ -160,10 +184,11 @@ export default function Story() {
           </div>
 
           {/* image 4 */}
-          <Image
+          <ImageZoom
             src={Image4}
             alt=''
             className='w-full lg:h-full h-auto object-cover'
+            containerClassName='relative lg:max-w-[50vw] lg:min-w-[400px] lg:h-[60vh] lg:ml-[2vw] w-full h-auto px-6 my-10 lg:my-0'
           />
 
           {/* section 5 */}
@@ -187,12 +212,13 @@ export default function Story() {
           </div>
 
           {/* image 5 */}
-          <Image
+          <ImageZoom
             src={Image2}
             alt=''
             className='w-full lg:h-full h-auto object-cover'
+            containerClassName='relative lg:max-w-[50vw] lg:min-w-[400px] lg:h-[60vh] lg:ml-[2vw] w-full h-auto px-6 my-10 lg:my-0'
           />
-          <div className='hidden lg:block lg:min-w-[5vw]'></div>
+          <div className='hidden lg:block lg:min-w-[2vw]'></div>
         </HorizontalScrollContainer>
 
         {/* Go Back to Start Button */}

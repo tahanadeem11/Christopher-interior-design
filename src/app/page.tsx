@@ -59,23 +59,23 @@ export default function Home() {
       <Header logo={Logo} />
 
       {/* Main Content - Professional spacing and alignment */}
-      <main className='relative z-10 container mx-auto px-4 sm:px-6 py-12 sm:py-16 md:py-20 mt-12 sm:mt-14 md:mt-16'>
-        <div className='max-w-4xl mx-auto text-center'>
+      <main className='relative z-10 flex items-center justify-center min-h-screen px-3 sm:px-6 pt-16 sm:pt-20 md:pt-24 lg:pt-28 xl:pt-32'>
+        <div className='max-w-5xl mx-auto text-center px-2 sm:px-4 w-full'>
           {/* Quote Container with smooth transitions */}
-          <div className='min-h-[150px] sm:min-h-[180px] md:min-h-[200px] flex flex-col justify-center items-center'>
+          <div className='flex flex-col justify-center items-center py-4 sm:py-8'>
             <div 
               className={`transition-all duration-1000 ease-in-out ${
                 isVisible ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-4'
               }`}
             >
-              <blockquote className='font-sans font-light text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-[#574f4d] leading-relaxed px-2 sm:px-4'>
+              <blockquote className='font-sans font-light text-xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-[#574f4d] leading-relaxed px-2 sm:px-6 text-center max-w-4xl mx-auto'>
                 &ldquo;{quotes[currentQuoteIndex].text}&rdquo;
               </blockquote>
             </div>
           </div>
 
           {/* Quote Navigation Dots */}
-          <div className='flex justify-center items-center space-x-2 sm:space-x-3 mt-8 sm:mt-10 md:mt-12'>
+          <div className='flex justify-center items-center space-x-3 sm:space-x-3 mt-6 sm:mt-10 md:mt-12 pb-4 sm:pb-0'>
             {quotes.map((_, index) => (
               <button
                 key={index}
@@ -86,7 +86,7 @@ export default function Home() {
                     setIsVisible(true);
                   }, 500);
                 }}
-                className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
+                className={`w-3 h-3 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
                   index === currentQuoteIndex 
                     ? 'bg-[#574f4d] scale-125' : 'bg-[#574f4d]/30 hover:bg-[#574f4d]/60'
                 }`}

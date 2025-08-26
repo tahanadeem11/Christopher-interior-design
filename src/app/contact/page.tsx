@@ -7,6 +7,7 @@ import BGImage from "@/assets/home/bg.png";
 
 import InstaIcon from "@/assets/contacts/CP insta icon.png";
 import PinterestIcon from "@/assets/contacts/CP pinterest icon.png";
+import ImageZoom from "@/components/shared/ImageZoom";
 import { sendContactEmail } from "./actions";
 
 export default function Contact() {
@@ -56,7 +57,7 @@ export default function Contact() {
       <Header logo={Logo} />
 
       {/* Main Content */}
-      <main className='relative z-10 container mx-auto px-4 py-16 -mt-10'>
+      <main className='relative z-10 container mx-auto px-4 py-16 pt-16 sm:pt-20 md:pt-24 lg:pt-28 xl:pt-32'>
         <div className='max-w-6xl mx-auto'>
           <div className='grid grid-cols-1 lg:grid-cols-2 gap-12 items-start'>
             {/* Left Side - Contact Info */}
@@ -79,7 +80,7 @@ export default function Contact() {
                   className='w-8 h-8 text-[#574f4d] hover:opacity-80 transition-opacity rounded-full overflow-clip'
                   aria-label='Instagram'
                 >
-                  <Image src={InstaIcon} alt='Instagram' className='w-full h-full' />
+                  <ImageZoom src={InstaIcon} alt='Instagram' className='w-full h-full' />
                 </a>
 
                 {/* Pinterest Icon */}
@@ -88,7 +89,7 @@ export default function Contact() {
                   className='w-8 h-8 text-[#574f4d] hover:opacity-80 transition-opacity rounded-full overflow-clip'
                   aria-label='Pinterest'
                 >
-                  <Image src={PinterestIcon} alt='Pinterest' className='w-full h-full' />
+                  <ImageZoom src={PinterestIcon} alt='Pinterest' className='w-full h-full' />
                 </a>
               </div>
             </div>

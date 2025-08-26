@@ -159,5 +159,41 @@
     border-radius: 8px;
   }
 
-  /* Removed problematic image zoom effects that caused disappearing images */
+  @keyframes calm-fade-zoom-in {
+    0% {
+      opacity: 0;
+      transform: scale(1.1) translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  @keyframes gentle-hover-zoom {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(1.02);
+    }
+  }
+
+  .image-zoom-effect {
+    opacity: 0;
+    transform: scale(1.15) translateY(30px);
+    transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: transform, opacity;
+  }
+
+  .image-zoom-effect.is-visible {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .image-zoom-effect.is-visible:hover {
+    transform: scale(1.03) translateY(0);
+    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
 }

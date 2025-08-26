@@ -12,8 +12,8 @@ function ImageZoom({ containerClassName, className, alt, ...props }: ImageZoomPr
   const ref = useRef<HTMLDivElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const isVisible = useIntersectionObserver(ref, { 
-    threshold: 0.2,
-    rootMargin: '50px'
+    threshold: 0.1,
+    rootMargin: '100px'
   });
 
   const handleImageLoad = () => {

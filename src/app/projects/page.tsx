@@ -6,6 +6,7 @@ import Image from "next/image";
 // components
 import { HorizontalScrollContainer, HorizontalScrollContainerRef } from "@/components/shared/HorizontalScrollContainer";
 import Header from "@/components/Header";
+import ImageZoom from "@/components/shared/ImageZoom";
 
 // assets
 import Logo from "@/assets/ethos/logo.png";
@@ -51,7 +52,7 @@ export default function Projects() {
       <Header logo={Logo} buttonClassName='text-[#D6D5C9]' />
 
       {/* Main Content */}
-      <main className='relative z-10 container pt-24 sm:pt-28 md:pt-32'>
+      <main className='relative z-10 container pt-16 sm:pt-20 md:pt-24 lg:pt-28 xl:pt-32'>
         <HorizontalScrollContainer ref={scrollContainerRef} onScrollChange={handleScrollChange}>
           {/* Section 1: Our Projects */}
           <div className='lg:max-w-[900px] lg:min-w-[900px] lg:pl-30 w-full max-w-[900px] px-6'>
@@ -80,16 +81,18 @@ export default function Projects() {
           </div>
 
           {/* Images 1 & 2 for Our Projects section */}
-          <div className='flex flex-col gap-6 lg:ml-[10vw] w-full px-6 lg:px-0 my-10 lg:my-0'>
-            <Image
+          <div className='flex flex-col gap-6 lg:ml-[2vw] w-full px-6 lg:px-0 my-10 lg:my-0'>
+            <ImageZoom
               src={Image1}
               alt=''
               className='w-full lg:h-full h-auto object-cover'
+              containerClassName='relative lg:max-w-[50vw] lg:min-w-[350px] lg:h-[29vh] w-full h-auto'
             />
-            <Image
+            <ImageZoom
               src={Image2}
               alt=''
               className='w-full lg:h-full h-auto object-cover'
+              containerClassName='relative lg:max-w-[50vw] lg:min-w-[350px] lg:h-[29vh] w-full h-auto'
             />
           </div>
 
@@ -123,16 +126,18 @@ export default function Projects() {
           </div>
 
           {/* Images 3 & 4 for The Quarry section */}
-          <div className='flex flex-col gap-6 lg:ml-[10vw] w-full px-6 lg:px-0 my-10 lg:my-0'>
-            <Image
+          <div className='flex flex-col gap-6 lg:ml-[2vw] w-full px-6 lg:px-0 my-10 lg:my-0'>
+            <ImageZoom
               src={Image3}
               alt=''
               className='w-full lg:h-full h-auto object-cover'
+              containerClassName='relative lg:max-w-[50vw] lg:min-w-[350px] lg:h-[29vh] w-full h-auto'
             />
-            <Image
+            <ImageZoom
               src={Image4}
               alt=''
               className='w-full lg:h-full h-auto object-cover'
+              containerClassName='relative lg:max-w-[50vw] lg:min-w-[350px] lg:h-[29vh] w-full h-auto'
             />
           </div>
 
@@ -156,19 +161,21 @@ export default function Projects() {
           </div>
 
           {/* Images 5 & 6 for Investment Details section */}
-          <div className='flex flex-col gap-6 lg:ml-[10vw] w-full px-6 lg:px-0 my-10 lg:my-0'>
-            <Image
+          <div className='flex flex-col gap-6 lg:ml-[2vw] w-full px-6 lg:px-0 my-10 lg:my-0'>
+            <ImageZoom
               src={Image5}
               alt=''
               className='w-full lg:h-full h-auto object-cover'
+              containerClassName='relative lg:max-w-[50vw] lg:min-w-[350px] lg:h-[29vh] w-full h-auto'
             />
-            <Image
+            <ImageZoom
               src={Image6}
               alt=''
               className='w-full lg:h-full h-auto object-cover'
+              containerClassName='relative lg:max-w-[50vw] lg:min-w-[350px] lg:h-[29vh] w-full h-auto'
             />
           </div>
-          <div className='hidden lg:block lg:min-w-[5vw]'></div>
+          <div className='hidden lg:block lg:min-w-[2vw]'></div>
         </HorizontalScrollContainer>
 
         {/* Go Back to Start Button */}
